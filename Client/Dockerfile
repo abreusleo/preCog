@@ -7,15 +7,15 @@ WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
 
-RUN npm ci 
+RUN npm install 
 
-ENV NODE_ENV=production
-
-COPY . .
+COPY . ./
 
 RUN npm run build
 
 FROM caddy:2.7.3-alpine
 
-COPY Caddyfile /etc/caddy/Caddyfile
+EXPOSE 80
+
+COPY ./Caddyfile /etc/caddy/Caddyfile
 COPY --from=builder /app/build /var/www/html

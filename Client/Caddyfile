@@ -1,11 +1,10 @@
+{
+    debug
+}
 :80 {   
     handle {
         root * /var/www/html
         try_files {path} {path}/ /index.html
         file_server
-    }
-    
-    handle /api/* {
-        reverse_proxy ${NEST_API_URL}
     }
 }
