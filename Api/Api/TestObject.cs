@@ -1,6 +1,6 @@
 namespace Api;
 
-public class WeatherForecast
+public class TestObject
 {
     public DateTime Date { get; set; }
 
