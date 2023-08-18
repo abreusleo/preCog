@@ -1,0 +1,10 @@
+{
+    debug
+}
+:80 {   
+    handle {
+        root * /var/www/html
+        try_files {path} {path}/ /index.html
+        file_server
+    }
+}
