@@ -1,1 +1,7 @@
 node_modules
+.eslint*
+.prettier*
+README.md
+CHANGELOG.md
+nginx
+.env.example
