@@ -1,0 +1,9 @@
+services:
+  api:
+    build: ./Api/.
+    image: "precog/api:${tag}"
+    container_name: Api
+    ports:
+      - "4001:4001"
+    env_file:
+      - .env
