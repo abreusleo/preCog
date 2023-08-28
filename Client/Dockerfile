@@ -1,21 +1,30 @@
 # syntax=docker/dockerfile:1
 
-FROM node:18-alpine as builder
+FROM node:lts-alpine as build
 
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 
-RUN npm install 
+EXPOSE 3000
 
-COPY . ./
+RUN npm ci
+
+COPY . .
+
+ENV NODE_ENV production
 
 RUN npm run build
 
-FROM caddy:2.7.3-alpine
+FROM node:lts-alpine as production
 
-EXPOSE 80
+WORKDIR /app
 
-COPY ./Caddyfile /etc/caddy/Caddyfile
-COPY --from=builder /app/build /var/www/html
+COPY --from=build /app/package*.json .
+COPY --from=build /app/build ./build
+
+EXPOSE 3000
+
+RUN npm ci --omit dev
+
+CMD ["node", "./build"]
