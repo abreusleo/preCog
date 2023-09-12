@@ -4,8 +4,9 @@ on:
   pull_request:
     branches: [main]
 
-env: 
-  BASE_DIR: Client
+defaults:
+  run:
+    working-directory: Client
 
 jobs:
   test:
@@ -31,14 +32,13 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
           cache: npm
+          cache-dependency-path: Client/package-lock.json
       - name: Install node dependencies
         run: npm ci
-        working-directory: ${{env.BASE_DIR}}
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Run unit and integration tests
         run: npm run test
-        working-directory: ${{env.BASE_DIR}}
   
   lint: 
     runs-on: ubuntu-latest
@@ -51,7 +51,6 @@ jobs:
         with: 
           node-version: 18
           cache: npm
+          cache-dependency-path: Client/package-lock.json
       - name: Run linter and formatter
         run: 'npm ci && npm run lint && npm run format'
-        working-directory: ${{env.BASE_DIR}}
-
