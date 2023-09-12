@@ -52,5 +52,5 @@ jobs:
           node-version: 18
           cache: npm
           cache-dependency-path: Client/package-lock.json
-      - name: Run linter and formatter
-        run: 'npm ci && npm run lint && npm run format'
+      - name: Run linter
+        run: 'npm ci && npm run lint'
