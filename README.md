@@ -9,8 +9,5 @@ We want to predict the match/tournament winner based on compositions, maps, play
 - RabbitMQ - Services communication
 - DB
 
-Our documentation and studies:
-- https://coda.io/d/Projeto_d8mmE-qKicd/preCog_suytw#_lu4GB
+Feel free to check our [documentation and studies](https://coda.io/d/Projeto_d8mmE-qKicd/preCog_suytw#_lu4GB) or our [Mokcups](https://www.figma.com/file/FO0l4WGuGrg4pI3Btvo5Ne/preCog-mockups?type=design&node-id=0%3A1&mode=design&t=B5tA7viuRxwBnNkI-1)
 
-Our Mockups:
-- https://www.figma.com/file/FO0l4WGuGrg4pI3Btvo5Ne/preCog-mockups?type=design&node-id=0%3A1&mode=design&t=B5tA7viuRxwBnNkI-1
