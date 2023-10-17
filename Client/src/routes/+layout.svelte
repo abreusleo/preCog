@@ -1,5 +1,9 @@
-<script>
-	import '../app.css';
+<script lang="ts">
+  import '../app.css';
+  import { Header } from '$lib/components/Header';
+  import { Menu } from '$lib/components/Menu';
 </script>
 
+<Header />
+<Menu />
 <slot />

@@ -1,4 +1,4 @@
-# PR - [Código da tarefa](htts://trello-link)
+# PR - [Código da tarefa](https://trello-link)
 
 - [ ] Update changelog
 - [ ] Tests are still working

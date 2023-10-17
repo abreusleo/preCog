@@ -5,10 +5,10 @@
 @tailwind utilities;
 
 body {
-	color: theme('colors.light-pink');
-	background-color: theme('colors.dark-grey');
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: theme('fontFamily.primary');
+  color: theme('colors.light-pink');
+  background-color: theme('colors.dark-grey');
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: theme('fontFamily.primary');
 }
