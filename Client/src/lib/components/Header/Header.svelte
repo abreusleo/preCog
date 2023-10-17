@@ -1,9 +1,9 @@
 <script lang="ts">
   import Logo from '$lib/assets/precoglogo.svg';
-  
+
   export let headerButtonFadingOut = false;
   export let headerButtonVisible = true;
-  export let toggleMenuOpen = () => {};
+  export let toggleMenuOpen = () => {null};
 
   $: fadeOutHeaderButton = headerButtonFadingOut ? 'animate-fade-out-header-button ' : ' ';
   $: fadeInHeaderButton = headerButtonVisible ? 'animate-fade-in-header-button block ' : 'hidden ';

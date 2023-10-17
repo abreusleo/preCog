@@ -3,7 +3,7 @@
   import { PredictionTypes } from '$lib/interfaces/predictionTypes';
 
   let predictionTypes: string[] = [PredictionTypes[0], PredictionTypes[1], PredictionTypes[2]];
-  let carouselIsMoving: boolean = false;
+  let carouselIsMoving = false;
 
   function handleCarouselClick(array: string[], index: number) {
     if (carouselIsMoving) return;

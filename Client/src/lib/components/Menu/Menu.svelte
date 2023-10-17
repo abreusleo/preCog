@@ -11,9 +11,9 @@
 <div
   class={menuExpand +
     menuCollapse +
-    'fixed top-0 right-0 h-56 w-40 origin-top flex-col items-center justify-evenly rounded-l-lg bg-dark-grey pt-16 pb-3 shadow-md shadow-black'}
+    'fixed right-0 top-0 h-56 w-40 origin-top flex-col items-center justify-evenly rounded-l-lg bg-dark-grey pb-3 pt-16 shadow-md shadow-black'}
 >
-  <div class='h-full w-full justify-evenly flex flex-col items-center'>
+  <div class="flex h-full w-full flex-col items-center justify-evenly">
     <div
       class="w-fit font-primary text-sm font-light text-light-pink transition-colors duration-300 hover:cursor-pointer hover:text-white"
     >
