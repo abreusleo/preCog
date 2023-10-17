@@ -1,0 +1,56 @@
+name: client
+
+on: 
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: Client
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - node-version: 16
+            os: ubuntu-latest
+          - node-version: 16
+            os: windows-latest
+          - node-version: 16
+            os: macOS-latest
+          - node-version: 18
+            os: ubuntu-latest
+          - node-version: 20
+            os: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Node setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: npm
+          cache-dependency-path: Client/package-lock.json
+      - name: Install node dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+      - name: Run unit and integration tests
+        run: npm run test
+  
+  lint: 
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Node setup
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 18
+          cache: npm
+          cache-dependency-path: Client/package-lock.json
+      - name: Run linter
+        run: 'npm ci && npm run lint'
