@@ -1,5 +1,4 @@
 <script lang="ts">
-  import X from '$lib/assets/x.png';
 </script>
 
 <div class="mt-10 mb-5 flex h-64 w-[85%] flex-col items-center justify-between rounded-md bg-dark-grey p-6 shadow-md">

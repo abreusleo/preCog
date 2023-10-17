@@ -16,10 +16,34 @@ export default {
         mauve: '#A37070',
         'light-red': '#C13434',
         'light-grey': '#323233',
-        'grey': '#232323'
+        grey: '#232323'
       },
       fontFamily: {
         primary: ['"Reem Kufi Variable"', 'sans-serif']
+      },
+      animation: {
+        'expand-menu': 'expandY 0.4s ease-in-out',
+        'collapse-menu': 'collapseY 0.4s ease-in-out',
+        'fade-out-header-button': 'fadeOut 0.4s forwards',
+        'fade-in-header-button': 'fadeIn 0.4s forwards'
+      },
+      keyframes: {
+        expandY: {
+          from: { transform: 'scale(1, 0)' },
+          to: { transform: 'scale(1, 1)' }
+        },
+        collapseY: {
+          from: { transform: 'scale(1, 1)' },
+          to: { transform: 'scale(1, 0)' }
+        },
+        fadeOut: {
+          from: { opacity: 1 },
+          to: { opacity: 0 }
+        },
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 }
+        }
       }
     }
   },
