@@ -1,4 +1,4 @@
-# preCog Api Changelog
+# preCog Client Changelog
 
 <!-- All notable changes to this project will be documented in this file.
 
@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Client project
 - Test and lint job on GitHub Actions
+- Mobile homepage
+- Histoire setup
 
 ### Fixed
 
