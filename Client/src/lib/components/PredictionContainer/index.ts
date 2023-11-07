@@ -1,1 +1,1 @@
-export { default as PredictionContainer } from '../PredictionContainer.svelte';
+export { default as PredictionContainer } from './PredictionContainer.svelte';

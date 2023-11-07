@@ -3,7 +3,7 @@
 
   import { Menu } from '.';
 
-  export let Hst: Hst;
+  let Hst: Hst;
 </script>
 
 <svelte:component this={Hst.Story} title="Menu">
