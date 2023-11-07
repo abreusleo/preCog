@@ -1,6 +1,8 @@
 <script lang="ts">
   import BackgroundImg from '$lib/assets/valorant-4.jpg';
   import PredictionContainer from '$lib/components/PredictionContainer.svelte';
+
+  export let data;
 </script>
 
 <main class="h-screen">
@@ -15,5 +17,5 @@
       />
     </div>
   </div>
-  <PredictionContainer />
+  <PredictionContainer data={data}/>
 </main>
