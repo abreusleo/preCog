@@ -28,7 +28,7 @@ public class PredictionController : ControllerBase
         return Ok(types);
     }
     
-    [HttpGet]
+    [HttpPost]
     public IActionResult Predict([FromQuery]PredictionTypes type, [FromBody]JsonElement input)
     {
         //TODO: Think about using a Factory to predict the result
