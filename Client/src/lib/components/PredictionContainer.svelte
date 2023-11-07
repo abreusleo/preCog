@@ -4,7 +4,10 @@
   import DownScroll from '$lib/assets/page_scroll_arrow.svg';
 </script>
 
-<section class="relative z-10 flex h-full w-full flex-col justify-between pb-24 pt-8 sm:bg-dark-grey sm:flex-row sm:w-[70%] sm:p-0 sm:my-12 sm:rounded-lg sm:h-[30rem]">
+<section
+  data-testid="predictions"
+  class="relative z-10 flex h-full w-full flex-col justify-between pb-24 pt-8 sm:my-12 sm:h-[30rem] sm:w-[70%] sm:flex-row sm:rounded-lg sm:bg-dark-grey sm:p-0"
+>
   <!-- <div class="flex w-full flex-col items-center sm:flex-row">
     <div class='flex flex-col items-center'>
       <h1

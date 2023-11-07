@@ -3,7 +3,7 @@
   import PredictionContainer from '$lib/components/PredictionContainer.svelte';
 </script>
 
-<main class="h-screen pt-16 flex flex-col items-center">
+<main class="flex h-screen flex-col items-center pt-16">
   <div class="fixed left-0 top-14 z-0 h-screen w-full overflow-hidden">
     <div class="fixed h-screen opacity-5 sm:opacity-100">
       <img
@@ -16,7 +16,8 @@
     </div>
   </div>
   <PredictionContainer />
-  <div class='hidden sm:flex w-full bg-dark-grey h-full relative z-10'>
-
-  </div>
+  <section
+    data-testid="upcoming-favorites"
+    class="relative z-10 hidden h-full w-full bg-dark-grey sm:flex"
+  ></section>
 </main>

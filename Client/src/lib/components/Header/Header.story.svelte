@@ -4,7 +4,7 @@
   import { Header } from '.';
   import Menu from '../Menu/Menu.story.svelte';
 
-  export let Hst: Hst;
+  let Hst: Hst;
 
   let menuOpen = false;
   let menuClosing = false;

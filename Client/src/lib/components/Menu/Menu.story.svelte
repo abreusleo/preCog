@@ -3,7 +3,7 @@
 
   import { Menu } from '.';
 
-  export let Hst: Hst;
+  let Hst: Hst;
 </script>
 
 <Hst.Story title="Menu">
