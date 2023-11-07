@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Championship, Player, Team } from '$lib/interfaces/dataTypes';
+  import PredictionSelection from '../PredictionSelection.svelte';
 
   export let data: {
     types: string[];
@@ -35,9 +36,7 @@
           </option>
         {/each}
       </select>
-      <div class="font-primary text-light-pink">
-        {activeType || 'Loading...'}
-      </div>
     </div>
+    <PredictionSelection activeType={activeType} data={data}/>
   </div>
 </section>

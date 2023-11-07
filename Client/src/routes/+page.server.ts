@@ -15,3 +15,11 @@ import { api } from "$lib/services/api";
     teams: teams
   };
 };
+
+/** @type {import('./$types').Actions} */
+export const actions = {
+	predict: async (event) => {
+		return null;
+	}
+};
+
