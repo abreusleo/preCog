@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Championship, Player, Team } from '$lib/interfaces/dataTypes';
-  import { api } from '$lib/services/api';
 
   export let activeType: string;
 
@@ -23,7 +22,12 @@
 
     if (activeType === 'Teams') fetch(`http://localhost:4001/Prediction?type=Teams`, {
       method: 'POST',
-      body: JSON.stringify(teamInput)
+      body: JSON.stringify(teamInput),
+      mode: 'no-cors',
+      headers: {
+        'content-type': 'text/plain',
+        'accept': '*/*'
+      }
     });
   }
 </script>
