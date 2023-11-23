@@ -57,6 +57,17 @@
     }
   }
 
+  function onSubmit(e: any) {
+    const formData = new FormData(e.target);
+
+    const data = {} as any;
+    for (let field of formData) {
+      const [key, value] = field;
+      data[key] = value;
+    }
+    console.log(data)
+  }
+
   $: fadeOutHeaderButton = headerButtonFadingOut ? 'animate-fade-out-header-button ' : ' ';
   $: fadeInHeaderButton = headerButtonVisible ? 'animate-fade-in-header-button block ' : 'hidden ';
 </script>
@@ -94,10 +105,10 @@
 
 <Modal bind:showModal="{showLoginModal}" bind:closeModal={closeLoginModal}>
   <div slot="body" class="grid grid-cols-1 content-center">
-    <form>
+    <form on:submit|preventDefault={onSubmit}>
       <div class="m-5">
         <label for="usernameLogin" class="text-xl">Username</label>
-        <input type="text" id="usernameLogin" class="bg-black text-white text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500 block w-full p-2.5" required>
+        <input type="text" name="usernameLogin" id="usernameLogin" class="bg-black text-white text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500 block w-full p-2.5" required>
       </div>
       <div class="m-5">
         <label for="passwordLogin" class="text-xl">Password</label>
@@ -121,18 +132,20 @@
 
 <Modal bind:showModal="{showRegisterModal}" bind:closeModal={closeRegisterModal}>
   <div slot="body" class="grid grid-cols-1 content-center">
-    <form>
+    <form on:submit|preventDefault={onSubmit}>
       <div id="emailUsernameModal">
         <div class="m-5">
           <label for="emailRegister" class="text-xl">Email</label>
-          <input type="email" id="emailRegister" class="bg-black text-white text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500 block w-full p-2.5" required>
+          <input type="email" name="emailRegister" id="emailRegister" class="bg-black text-white text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500 block w-full p-2.5" required>
         </div>
         <div class="m-5">
           <label for="usernameRegister" class="text-xl">Username</label>
-          <input type="text" name="username" id="usernameRegister" class="bg-black text-white text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500 block w-full p-2.5" required>
+          <input type="text" name="usernameRegister" id="usernameRegister" class="bg-black text-white text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500 block w-full p-2.5" required>
         </div>
         <div class="m-5">
           <button
+            name="nextButton"
+            type="button"
             class="h-12 w-28 rounded-md bg-red-500 font-primary text-sm text-light-pink"
             on:click={showConfirmationPasswordModal}
           >
@@ -142,7 +155,9 @@
       </div>
       <div id="confirmationPasswordModal" class="hidden">
         <div id="backButton">
-          <button type="button" 
+          <button 
+            name="backButton"
+            type="button" 
             class="w-full flex flex-row w-1/2 py-2 font-primary text-sm text-light-pink transition-colors duration-200 gap-x-2 sm:w-auto"
             on:click={backToEmailUsernameModal}
           >
@@ -150,7 +165,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
             </svg>
             <span>Back</span>
-        </button>
+          </button>
         </div>
         <div id="passwordInput" class="m-5">
           <label for="passwordRegister" class="text-xl">Password</label>
@@ -162,6 +177,7 @@
         </div>
         <div id="registerButton" class="m-5">
           <button
+            type="submit"
             class="h-12 w-28 rounded-md bg-red-500 font-primary text-sm text-light-pink"
           >
             REGISTER
