@@ -7,3 +7,37 @@ services:
       - "4001:4001"
     env_file:
       - .env
+
+  client:
+    build: ./Client/.
+    image: "precog/client:${tag}"
+    container_name: Client
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+  
+  nginx:
+    build: ./Client/nginx/.
+    image: "precog/nginx:${tag}"
+    container_name: nginx
+    ports:   
+      - "8080:80"
+    env_file: 
+      - .env
+
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'api_possibility'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  mysql:
