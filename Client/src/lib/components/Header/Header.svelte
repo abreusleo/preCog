@@ -1,10 +1,13 @@
 <script lang="ts">
   import Logo from '$lib/assets/precoglogo.svg';
   import Modal from '../Modal/Modal.svelte';
+  import Menu from "../Menu/Menu.svelte"
 
+  export let menuOpen = false;
+  export let menuClosing = false;
   export let headerButtonFadingOut = false;
   export let headerButtonVisible = true;
-  export let toggleMenuOpen = () => {null};
+  export let hiddenMenu = false;
 
   let showLoginModal = false;
   let showRegisterModal = false;
@@ -69,11 +72,30 @@
   }
 
   $: fadeOutHeaderButton = headerButtonFadingOut ? 'animate-fade-out-header-button ' : ' ';
-  $: fadeInHeaderButton = headerButtonVisible ? 'animate-fade-in-header-button block ' : 'hidden ';
+  $: fadeInHeaderButton = headerButtonVisible ? 'animate-fade-in-header-button block ' : 'hidden';
+  $: hidden = hiddenMenu ? 'cursor-default' : '';
+
+  let menuIsOpening = false;
+
+  export function menuToggle(){
+    if(menuIsOpening) {
+      return
+    }
+    menuIsOpening = true;
+    setTimeout(() => {
+      menuIsOpening = false;
+    }, 500);
+
+    headerButtonVisible = !headerButtonVisible;
+    headerButtonFadingOut = !headerButtonFadingOut;
+    hiddenMenu = !hiddenMenu;
+    menuOpen = !menuOpen;
+    menuClosing = !menuClosing;
+  }
 </script>
 
 <div
-  class="fixed left-0 top-0 z-40 flex h-16 w-full items-center justify-between bg-dark-grey px-4 shadow-md shadow-black"
+  class="fixed left-0 top-0 z-40 flex h-16 w-full items-center justify-between bg-dark-grey px-4 shadow-md shadow-black md:px-10 "
 >
   <img src={Logo} alt="PreCog logo" />
   <div class="flex gap-4">
@@ -83,23 +105,23 @@
     >
       SIGN IN
     </button>
-    <button on:click={toggleMenuOpen}>
-      <span
-        class={fadeOutHeaderButton +
-          fadeInHeaderButton +
-          'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink'}
-      />
-      <span
-        class={fadeOutHeaderButton +
-          fadeInHeaderButton +
-          'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:100ms]'}
-      />
-      <span
-        class={fadeOutHeaderButton +
-          fadeInHeaderButton +
-          'h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:200ms]'}
-      />
-    </button>
+    <button class={hidden +" sm:invisible flex flex-col items-center justify-between w-5"} on:click={menuToggle}>
+    <span
+      class={fadeOutHeaderButton +
+        fadeInHeaderButton +
+        'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink'}
+    />
+    <span
+      class={fadeOutHeaderButton +
+        fadeInHeaderButton +
+        'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:100ms]'}
+    />
+    <span
+      class={fadeOutHeaderButton +
+        fadeInHeaderButton +
+        'h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:200ms]'}
+    />
+  </button>
   </div>
 </div>
 
@@ -192,3 +214,4 @@
     </div>
   </div>
 </Modal>
+<Menu {menuOpen} {menuClosing} {menuToggle}/>

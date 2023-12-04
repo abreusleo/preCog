@@ -37,8 +37,8 @@ export default {
           to: { transform: 'scale(1, 0)' }
         },
         fadeOut: {
-          from: { opacity: 1 },
-          to: { opacity: 0 }
+          from: { opacity: 1, display: 'flex' },
+          to: { opacity: 0, display: 'none' }
         },
         fadeIn: {
           from: { opacity: 0 },
