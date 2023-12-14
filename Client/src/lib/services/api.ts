@@ -3,10 +3,8 @@ async function get(
   fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 ) {
   try {
-    const response = await fetch(`http://localhost:4001/${route}`, {
-      headers: {
-        Origin: 'http://localhost:5173'
-      }
+    const response = await fetch(`http://nginx:80/api/${route}`, {
+      method: 'GET'
     });
     return await response.json();
   } catch (e) {
@@ -22,12 +20,9 @@ async function post(
   fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 ) {
   try {
-    const response = await fetch(`http://localhost:4001/${route}${params}`, {
+    const response = await fetch(`http://nginx:80/api/${route}${params}`, {
       method: 'POST',
-      body: body,
-      headers: {
-        Origin: 'http://localhost:5173'
-      }
+      body: body
     });
     return await response.json();
   } catch (e) {

@@ -10,7 +10,7 @@
     teams: Team[];
   };
 
-  function handleClick(activeType: string) {
+  async function handleClick(activeType: string) {
     const teamInput = {
       FirstTeam: data.teams[0].name,
       SecondTeam: data.teams[1].name
@@ -20,15 +20,44 @@
       Name: data.championships[0].name
     };
 
-    if (activeType === 'Teams') fetch(`http://localhost:4001/Prediction?type=Teams`, {
-      method: 'POST',
-      body: JSON.stringify(teamInput),
-      mode: 'no-cors',
-      headers: {
-        'content-type': 'text/plain',
-        'accept': '*/*'
-      }
-    });
+    const playerInput = {
+      FirstPlayer: data.players[0].name,
+      SecondPlayer: data.players[1].name
+    };
+
+    if (activeType === 'Teams') {
+      const response = await fetch(`http://localhost:8080/api/Prediction?type=1`, {
+        method: 'POST',
+        body: JSON.stringify(teamInput),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      console.log(response);
+    }
+    if (activeType === 'Championships') {
+      const response = await fetch(`http://localhost:8080/api/Prediction?type=2`, {
+        method: 'POST',
+        body: JSON.stringify(championshipInput),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      console.log(response);
+    }
+    if (activeType === 'Players') {
+      const response = await fetch(`http://localhost:8080/api/Prediction?type=0`, {
+        method: 'POST',
+        body: JSON.stringify(playerInput),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      console.log(response);
+    }
   }
 </script>
 
@@ -37,43 +66,59 @@
 >
   <div class="flex w-full items-center justify-between">
     {#if activeType === 'Players'}
-      <div class='flex flex-col items-center'>
+      <div class="flex flex-col items-center">
         <div class="mb-3 h-16 w-16 rounded-md bg-grey">
-          <img src={data.players[0].photoUrl} alt='Player 1' class='h-full w-full rounded-md shadow-lg'>
+          <img
+            src={data.players[0].photoUrl}
+            alt="Player 1"
+            class="h-full w-full rounded-md shadow-lg"
+          />
         </div>
         {data.players[0].name}
       </div>
-      <span class='font-primary text-light-red text-lg'>
-        X
-      </span>
-      <div class='flex flex-col items-center'>
+      <span class="font-primary text-lg text-light-red">X</span>
+      <div class="flex flex-col items-center">
         <div class="mb-3 h-16 w-16 rounded-md bg-grey">
-          <img src={data.players[1].photoUrl} alt='Player 1' class='h-full w-full rounded-md shadow-lg'>
+          <img
+            src={data.players[1].photoUrl}
+            alt="Player 1"
+            class="h-full w-full rounded-md shadow-lg"
+          />
         </div>
         {data.players[1].name}
       </div>
     {/if}
     {#if activeType === 'Teams'}
-      <div class='flex flex-col items-center'>
+      <div class="flex flex-col items-center">
         <div class="mb-3 h-16 w-16 rounded-md bg-grey">
-          <img src={data.teams[0].logoUrl} alt='Player 1' class='h-full w-full rounded-md shadow-lg'>
+          <img
+            src={data.teams[0].logoUrl}
+            alt="Player 1"
+            class="h-full w-full rounded-md shadow-lg"
+          />
         </div>
         {data.teams[0].name}
       </div>
-      <span class='font-primary text-light-red text-lg'>
-        X
-      </span>
-      <div class='flex flex-col items-center'>
+      <span class="font-primary text-lg text-light-red">X</span>
+      <div class="flex flex-col items-center">
         <div class="mb-3 h-16 w-16 rounded-md bg-grey">
-          <img src={data.teams[1].logoUrl} alt='Player 1' class='h-full w-full rounded-md shadow-lg'>
+          <img
+            src={data.teams[1].logoUrl}
+            alt="Player 1"
+            class="h-full w-full rounded-md shadow-lg"
+          />
         </div>
         {data.teams[1].name}
       </div>
     {/if}
     {#if activeType === 'Championships'}
-      <div class='flex flex-col items-center'>
+      <div class="flex flex-col items-center">
         <div class="mb-3 h-16 w-16 rounded-md bg-grey">
-          <img src={data.championships[0].logoUrl} alt='Player 1' class='h-full w-full rounded-md shadow-lg'>
+          <img
+            src={data.championships[0].logoUrl}
+            alt="Player 1"
+            class="h-full w-full rounded-md shadow-lg"
+          />
         </div>
         {data.championships[0].name}
       </div>

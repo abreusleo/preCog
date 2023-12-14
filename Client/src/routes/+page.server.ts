@@ -16,10 +16,10 @@ import { api } from "$lib/services/api";
   };
 };
 
-/** @type {import('./$types').Actions} */
-export const actions = {
-	predict: async (event) => {
-		return null;
-	}
-};
+///** @type {import('./$types').Actions} */
+//export const actions = {
+//	predict: async (event) => {
+//		return null;
+//	}
+//};
 
