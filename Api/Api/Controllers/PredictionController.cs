@@ -44,8 +44,8 @@ public class PredictionController : ControllerBase
             
             case PredictionTypes.Players:
                 var playerInput = input.Deserialize<PlayerInput>();
-                _logger.LogTrace("Player prediction: {}", playerInput.Name);
-                winner = playerInput.Name;
+                _logger.LogTrace("Player prediction: {}", playerInput.FirstPlayer);
+                winner = playerInput.FirstPlayer;
                 break;
             
             case PredictionTypes.Championships:

@@ -23,5 +23,6 @@ public class ChampionshipInput
 // TODO: Pensar em como vai funcionar essa predição
 public class PlayerInput
 {
-    public string Name { get; set; }
+    public string FirstPlayer { get; set; }
+    public string SecondPlayer { get; set; }
 }
