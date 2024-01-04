@@ -4,7 +4,9 @@
 
   export let headerButtonFadingOut = false;
   export let headerButtonVisible = true;
-  export let toggleMenuOpen = () => {null};
+  export let toggleMenuOpen = () => {
+    null;
+  };
 
   let showLoginModal = false;
   let showRegisterModal = false;
@@ -72,7 +74,7 @@
   $: fadeInHeaderButton = headerButtonVisible ? 'animate-fade-in-header-button block ' : 'hidden ';
 </script>
 
-<div
+<header
   class="fixed left-0 top-0 z-40 flex h-16 w-full items-center justify-between bg-dark-grey px-4 shadow-md shadow-black"
 >
   <img src={Logo} alt="PreCog logo" />
@@ -101,7 +103,7 @@
       />
     </button>
   </div>
-</div>
+</header>
 
 <Modal bind:showModal="{showLoginModal}" bind:closeModal={closeLoginModal}>
   <div slot="body" class="grid grid-cols-1 content-center">

@@ -38,7 +38,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Run unit and integration tests
-        run: npm run test:unit
+        run: npm run test
   
   lint: 
     runs-on: ubuntu-latest
@@ -53,4 +53,4 @@ jobs:
           cache: npm
           cache-dependency-path: Client/package-lock.json
       - name: Run linter
-        run: 'npm ci'
+        run: 'npm ci && npm run lint'
