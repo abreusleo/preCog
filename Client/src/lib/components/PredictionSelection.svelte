@@ -12,17 +12,17 @@
 
   async function handleClick(activeType: string) {
     const teamInput = {
-      FirstTeam: data.teams[0].name,
-      SecondTeam: data.teams[1].name
+      FirstTeamId: data.teams[0].id,
+      SecondTeamId: data.teams[1].id
     };
 
     const championshipInput = {
-      Name: data.championships[0].name
+      Id: data.championships[0].id
     };
 
     const playerInput = {
-      FirstPlayer: data.players[0].name,
-      SecondPlayer: data.players[1].name
+      FirstPlayerId: data.players[0].id,
+      SecondPlayerId: data.players[1].id
     };
 
     if (activeType === 'Teams') {
@@ -77,7 +77,7 @@
         {data.players[0].name}
       </div>
       <span class="font-primary text-lg text-light-red">X</span>
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col items-center"> 
         <div class="mb-3 h-16 w-16 rounded-md bg-grey">
           <img
             src={data.players[1].photoUrl}
