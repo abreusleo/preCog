@@ -1,10 +1,8 @@
 <script lang="ts">
   import type { Hst } from '@histoire/plugin-svelte';
-
   import { Header } from '.';
-  import Menu from '../Menu/Menu.story.svelte';
 
-  let Hst: Hst;
+  export let Hst: Hst;
 
   let menuOpen = false;
   let menuClosing = false;
@@ -32,5 +30,5 @@
 </script>
 
 <svelte:component this={Hst.Story}>
-  <Header {headerButtonFadingOut} {headerButtonVisible} {toggleMenuOpen} />
+  <Header />
 </svelte:component>
