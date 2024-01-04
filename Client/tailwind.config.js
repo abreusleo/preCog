@@ -16,7 +16,8 @@ export default {
         mauve: '#A37070',
         'light-red': '#C13434',
         'light-grey': '#323233',
-        grey: '#232323'
+        grey: '#232323',
+        'prediction-container-grey': '#171717'
       },
       fontFamily: {
         primary: ['"Reem Kufi Variable"', 'sans-serif']
