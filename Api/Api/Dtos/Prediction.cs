@@ -11,18 +11,17 @@ public class Prediction
 
 public class TeamInput
 {
-    public string FirstTeam { get; set; }
-    public string SecondTeam { get; set; }
+    public int FirstTeamId { get; set; }
+    public int SecondTeamId { get; set; }
 }
 
 public class ChampionshipInput
 {
-    public string Name { get; set; }
+    public int Id { get; set; }
 }
 
-// TODO: Pensar em como vai funcionar essa predição
 public class PlayerInput
 {
-    public string FirstPlayer { get; set; }
-    public string SecondPlayer { get; set; }
+    public int FirstPlayerId { get; set; }
+    public int SecondPlayerId { get; set; }
 }

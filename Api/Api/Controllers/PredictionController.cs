@@ -32,28 +32,25 @@ public class PredictionController : ControllerBase
     public IActionResult Predict([FromQuery]PredictionTypes type, [FromBody]JsonElement input)
     {
         //TODO: Think about using a Factory to predict the result
-        
-        var winner = "";
         switch (type)
         {
             case PredictionTypes.Teams:
                 var teamInput = input.Deserialize<TeamInput>();
-                _logger.LogTrace("Team prediction: {} x {}", teamInput.FirstTeam, teamInput.SecondTeam);
-                winner = teamInput.FirstTeam;
-                break;
+                _logger.LogTrace("Team prediction: {} x {}", teamInput.FirstTeamId, teamInput.SecondTeamId);
+                return Ok(teamInput.FirstTeamId);
             
             case PredictionTypes.Players:
                 var playerInput = input.Deserialize<PlayerInput>();
-                _logger.LogTrace("Player prediction: {}", playerInput.FirstPlayer);
-                winner = playerInput.FirstPlayer;
-                break;
+                _logger.LogTrace("Player prediction: {} x {}", playerInput.FirstPlayerId, playerInput.SecondPlayerId);
+                return Ok(playerInput.FirstPlayerId);
             
             case PredictionTypes.Championships:
                 var championshipInput = input.Deserialize<ChampionshipInput>();
-                _logger.LogTrace("Championship prediction: {}", championshipInput.Name);
-                winner = championshipInput.Name;
-                break;
+                _logger.LogTrace("Championship prediction: {}", championshipInput.Id);
+                return Ok(championshipInput.Id);
+            
+            default:
+                return NotFound();
         }
-        return Ok(winner);
     }
 }
