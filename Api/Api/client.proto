@@ -1,0 +1,12 @@
+service Server {
+    rpc RecordRoute(RequestObj) returns (ReturnObj) {}
+}
+
+message RequestObj {
+    required string example = 1;
+    required int32 numberExample = 2;
+}
+
+message ReturnObj {
+    required string result = 1;
+}
