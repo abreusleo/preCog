@@ -1,10 +1,16 @@
 <script lang="ts">
   import Logo from '$lib/assets/precoglogo.svg';
   import Modal from '../Modal/Modal.svelte';
+  import Menu from "../Menu/Menu.svelte"
 
+  export let menuOpen = false;
+  export let menuClosing = false;
   export let headerButtonFadingOut = false;
   export let headerButtonVisible = true;
-  export let toggleMenuOpen = () => {null};
+  export let hiddenMenu = false;
+  export let toggleMenuOpen = () => {
+    null;
+  };
 
   let showLoginModal = false;
   let showRegisterModal = false;
@@ -69,39 +75,58 @@
   }
 
   $: fadeOutHeaderButton = headerButtonFadingOut ? 'animate-fade-out-header-button ' : ' ';
-  $: fadeInHeaderButton = headerButtonVisible ? 'animate-fade-in-header-button block ' : 'hidden ';
+  $: fadeInHeaderButton = headerButtonVisible ? 'animate-fade-in-header-button block ' : 'hidden';
+  $: hidden = hiddenMenu ? 'cursor-default' : '';
+
+  let menuIsOpening = false;
+
+  export function menuToggle(){
+    if(menuIsOpening) {
+      return
+    }
+    menuIsOpening = true;
+    setTimeout(() => {
+      menuIsOpening = false;
+    }, 500);
+
+    headerButtonVisible = !headerButtonVisible;
+    headerButtonFadingOut = !headerButtonFadingOut;
+    hiddenMenu = !hiddenMenu;
+    menuOpen = !menuOpen;
+    menuClosing = !menuClosing;
+  }
 </script>
 
-<div
+<header
   class="fixed left-0 top-0 z-40 flex h-16 w-full items-center justify-between bg-dark-grey px-4 shadow-md shadow-black"
 >
   <img src={Logo} alt="PreCog logo" />
   <div class="flex gap-4">
     <button
-      class="flex h-12 w-28 items-center justify-center rounded-md bg-dark-grey font-primary text-base text-light-pink border border-gray-600"
+      class="flex h-12 w-28 items-center justify-center rounded-md bg-dark-grey font-primary text-base text-light-pink border border-gray-600 hidden-mobile"
       on:click={openLoginModal}
     >
       SIGN IN
     </button>
-    <button on:click={toggleMenuOpen}>
-      <span
-        class={fadeOutHeaderButton +
-          fadeInHeaderButton +
-          'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink'}
-      />
-      <span
-        class={fadeOutHeaderButton +
-          fadeInHeaderButton +
-          'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:100ms]'}
-      />
-      <span
-        class={fadeOutHeaderButton +
-          fadeInHeaderButton +
-          'h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:200ms]'}
-      />
-    </button>
+    <button class={hidden +" sm:hidden flex flex-col items-center justify-between w-5"} on:click={menuToggle}>
+    <span
+      class={fadeOutHeaderButton +
+        fadeInHeaderButton +
+        'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink'}
+    />
+    <span
+      class={fadeOutHeaderButton +
+        fadeInHeaderButton +
+        'mb-1 h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:100ms]'}
+    />
+    <span
+      class={fadeOutHeaderButton +
+        fadeInHeaderButton +
+        'h-1 w-auto rounded-full border-[2.5px] border-light-pink [animation-delay:200ms]'}
+    />
+  </button>
   </div>
-</div>
+</header>
 
 <Modal bind:showModal="{showLoginModal}" bind:closeModal={closeLoginModal}>
   <div slot="body" class="grid grid-cols-1 content-center">
@@ -158,7 +183,7 @@
           <button 
             name="backButton"
             type="button" 
-            class="w-full flex flex-row w-1/2 py-2 font-primary text-sm text-light-pink transition-colors duration-200 gap-x-2 sm:w-auto"
+            class="w-full flex flex-row py-2 font-primary text-sm text-light-pink transition-colors duration-200 gap-x-2 sm:w-auto"
             on:click={backToEmailUsernameModal}
           >
             <svg class="w-5 h-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -192,3 +217,12 @@
     </div>
   </div>
 </Modal>
+<Menu {menuOpen} {menuClosing} {menuToggle} {openLoginModal}/>
+
+<style>
+  @media (max-width: 640px) {
+    .hidden-mobile {
+      display: none;
+    }
+  }
+</style>

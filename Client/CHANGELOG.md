@@ -22,7 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test and lint job on GitHub Actions
 - Mobile homepage
 - Histoire setup
+- Desktop homepage
 - Login and Register modal
+- [API-42] Prediction menu
 
 ### Fixed
 
