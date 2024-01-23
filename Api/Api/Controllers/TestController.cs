@@ -16,12 +16,10 @@ public class TestController : ControllerBase
     };
 
     private readonly ILogger<TestController> _logger;
-    private readonly Server.ServerClient _serverClient;
 
-    public TestController(ILogger<TestController> logger, Server.ServerClient serverClient)
+    public TestController(ILogger<TestController> logger)
     {
         _logger = logger;
-        _serverClient = serverClient;
     }
 
     [HttpGet(Name = "GetTestObject")]
@@ -34,17 +32,5 @@ public class TestController : ControllerBase
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
-    }
-        
-    [HttpGet]
-    [Route("GRPC")]
-    public ReturnObj Get(string text, int number)
-    {
-        _logger.LogTrace("API Request. Text: {text}, Number: {Number}", text, number);
-        
-        ReturnObj returnObj = _serverClient.RecordRoute(new RequestObj { Example = text, NumberExample = number });
-        
-        _logger.LogTrace("GPRC response arrived. Response: {response}", returnObj.Result);
-        return returnObj;
     }
 }

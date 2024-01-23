@@ -5,7 +5,7 @@ using Grpc.Net.Client;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddGrpcClient<Server.ServerClient>(o => o.Address = new Uri("http://localhost:50051"));
+builder.Services.AddGrpcClient<Predictor.PredictorClient>(o => o.Address = new Uri("http://localhost:50051"));
 
 // Add services to the container.
 
