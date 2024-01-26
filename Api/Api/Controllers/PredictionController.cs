@@ -38,16 +38,16 @@ public class PredictionController : ControllerBase
         //TODO: Think about using a Factory to predict the result
         switch (type)
         {
-            case PredictionTypes.Teams:
-                var teamInput = input.Deserialize<TeamInput>();
-                _logger.LogTrace("Team prediction: {} x {}", teamInput.FirstTeamId, teamInput.SecondTeamId);
-                prediction = _predictorClient.TeamPrediction(new TeamInput { FirstTeamId = teamInput.FirstTeamId, SecondTeamId = teamInput.SecondTeamId });
-                return Ok(prediction.Id);
-            
             case PredictionTypes.Players:
                 var playerInput = input.Deserialize<PlayerInput>();
                 _logger.LogTrace("Player prediction: {} x {}", playerInput.FirstPlayerId, playerInput.SecondPlayerId);
                 prediction = _predictorClient.PlayerPrediction(new PlayerInput { FirstPlayerId = playerInput.FirstPlayerId, SecondPlayerId = playerInput.SecondPlayerId });
+                return Ok(prediction.Id);
+
+            case PredictionTypes.Teams:
+                var teamInput = input.Deserialize<TeamInput>();
+                _logger.LogTrace("Team prediction: {} x {}", teamInput.FirstTeamId, teamInput.SecondTeamId);
+                prediction = _predictorClient.TeamPrediction(new TeamInput { FirstTeamId = teamInput.FirstTeamId, SecondTeamId = teamInput.SecondTeamId });
                 return Ok(prediction.Id);
             
             case PredictionTypes.Championships:

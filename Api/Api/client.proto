@@ -1,17 +1,17 @@
 service Predictor {
-    rpc TeamPrediction(TeamInput) returns (PredictionOutput) {}
     rpc PlayerPrediction(PlayerInput) returns (PredictionOutput) {}
+    rpc TeamPrediction(TeamInput) returns (PredictionOutput) {}
     rpc ChampionshipPrediction(ChampionshipInput) returns (PredictionOutput) {}
-}
-
-message TeamInput {
-    required int32 firstTeamId = 1;
-    required int32 secondTeamId = 2;
 }
 
 message PlayerInput {
     required int32 firstPlayerId = 1;
     required int32 secondPlayerId = 2;
+}
+
+message TeamInput {
+    required int32 firstTeamId = 1;
+    required int32 secondTeamId = 2;
 }
 
 message ChampionshipInput {
