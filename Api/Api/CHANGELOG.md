@@ -19,3 +19,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Api project
 - Build job on github actions
 - [API-42] Predict route
+- [PDT-51] Predictor service
