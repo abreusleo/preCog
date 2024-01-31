@@ -4,8 +4,12 @@ using Api.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using Api.Dtos;
+using Api.Exceptions;
+using Api.Predictors;
+using Api.Services.Predictors;
 using Enum = System.Enum;
 
 namespace Api.Controllers;
@@ -15,10 +19,12 @@ namespace Api.Controllers;
 public class PredictionController : ControllerBase
 {
     private readonly ILogger<PredictionController> _logger;
+    private readonly PredictorFactory _predictorFactory;
 
-    public PredictionController(ILogger<PredictionController> logger)
+    public PredictionController(ILogger<PredictionController> logger, PredictorFactory predictorFactory)
     {
         _logger = logger;
+        _predictorFactory = predictorFactory;
     }
     
     [HttpGet("Types")]
@@ -31,26 +37,15 @@ public class PredictionController : ControllerBase
     [HttpPost]
     public IActionResult Predict([FromQuery]PredictionTypes type, [FromBody]JsonElement input)
     {
-        //TODO: Think about using a Factory to predict the result
-        switch (type)
+        try
         {
-            case PredictionTypes.Teams:
-                var teamInput = input.Deserialize<TeamInput>();
-                _logger.LogTrace("Team prediction: {} x {}", teamInput.FirstTeamId, teamInput.SecondTeamId);
-                return Ok(teamInput.FirstTeamId);
-            
-            case PredictionTypes.Players:
-                var playerInput = input.Deserialize<PlayerInput>();
-                _logger.LogTrace("Player prediction: {} x {}", playerInput.FirstPlayerId, playerInput.SecondPlayerId);
-                return Ok(playerInput.FirstPlayerId);
-            
-            case PredictionTypes.Championships:
-                var championshipInput = input.Deserialize<ChampionshipInput>();
-                _logger.LogTrace("Championship prediction: {}", championshipInput.Id);
-                return Ok(championshipInput.Id);
-            
-            default:
-                return NotFound();
+            Predictor predictor = _predictorFactory.Create(type);
+            return Ok(predictor.Predict(input));
+        }
+        catch (BasePrecogException e)
+        {
+            _logger.LogError("Exception caught while trying to predict result. StatusCode: {ExceptionStatusCode}, Message: {ExceptionMessage}", e.Message, e.StatusCode);
+            return StatusCode((int) e.StatusCode, e.Message);
         }
     }
 }
