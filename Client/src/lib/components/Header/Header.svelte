@@ -8,9 +8,7 @@
   export let headerButtonFadingOut = false;
   export let headerButtonVisible = true;
   export let hiddenMenu = false;
-  export let toggleMenuOpen = () => {
-    null;
-  };
+
 
   let showLoginModal = false;
   let showRegisterModal = false;

@@ -1,0 +1,1 @@
+export { default as UpComing } from "./UpcomingMatches.svelte"
