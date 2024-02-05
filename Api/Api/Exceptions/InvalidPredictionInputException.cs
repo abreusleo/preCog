@@ -1,5 +1,5 @@
-using System;
 using System.Net;
+using Api.Exceptions.Base;
 
 namespace Api.Exceptions;
 

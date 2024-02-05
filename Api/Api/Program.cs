@@ -1,4 +1,3 @@
-using Api.Predictors;
 using Api.Services.Predictors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

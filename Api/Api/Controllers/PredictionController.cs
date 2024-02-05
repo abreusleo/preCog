@@ -8,7 +8,7 @@ using System.Net;
 using System.Text.Json;
 using Api.Dtos;
 using Api.Exceptions;
-using Api.Predictors;
+using Api.Exceptions.Base;
 using Api.Services.Predictors;
 using Enum = System.Enum;
 
@@ -35,7 +35,7 @@ public class PredictionController : ControllerBase
     }
     
     [HttpPost]
-    public IActionResult Predict([FromQuery]PredictionTypes type, [FromBody]JsonElement input)
+    public IActionResult Predict([FromQuery]int type, [FromBody]JsonElement input)
     {
         try
         {

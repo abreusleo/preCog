@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Api.Predictors;
+namespace Api.Services.Predictors;
 
 public abstract class Predictor
 {

@@ -2,8 +2,8 @@ using System;
 using System.Text.Json;
 using Api.Dtos;
 using Api.Exceptions;
-using Api.Predictors;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Api.Services.Predictors.Implementations;
 
@@ -20,7 +20,7 @@ public class ChampionshipPredictor : Predictor
         ChampionshipInput championshipInput;
         try
         { 
-            championshipInput = input.Deserialize<ChampionshipInput>();
+            championshipInput = JsonConvert.DeserializeObject<ChampionshipInput>(input.GetRawText());
         }
         catch (Exception e)
         {

@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace Api.Exceptions;
+namespace Api.Exceptions.Base;
 
 public class BasePrecogException : Exception
 {

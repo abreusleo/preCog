@@ -1,6 +1,5 @@
 using Api.Enums;
 using Api.Exceptions;
-using Api.Predictors;
 using Api.Services.Predictors.Implementations;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +22,18 @@ public class PredictorFactory
             PredictionTypes.Players => new PlayerPredictor(_logger),
             PredictionTypes.Teams => new TeamPredictor(_logger),
             _ => throw new PredictionTypeNotFoundException()
+        };
+    }
+    
+    public Predictor Create(int type)
+    {
+        PredictionTypes enumType = (PredictionTypes) type; 
+        return enumType switch
+        {
+            PredictionTypes.Championships => new ChampionshipPredictor(_logger),
+            PredictionTypes.Players => new PlayerPredictor(_logger),
+            PredictionTypes.Teams => new TeamPredictor(_logger),
+            _ => throw new PredictionTypeNotFoundException(type)
         };
     }
 }
