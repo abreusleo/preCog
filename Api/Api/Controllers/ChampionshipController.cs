@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Api.Dtos;
 using Api.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers;
 
@@ -18,6 +20,8 @@ public class ChampionshipController : ControllerBase
     }
     
     [HttpGet]
+    [SwaggerOperation(Summary = "Get a list of all championships.", Description = "Get a list of all available championships.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetPossibleChampionshipsDto>))]
     public IActionResult GetPossibleChampionships()
     {
         GetPossibleChampionshipsDto dto = new GetPossibleChampionshipsDto { Id = 0, Name = "VCT Americas", Region = ChampionshipRegions.Americas.ToString(), LogoUrl = "https://cdn.thespike.gg/VCT%25202023%2FVCT23-AMERICAS_1678786271315.png" };
