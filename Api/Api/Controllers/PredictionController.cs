@@ -10,6 +10,8 @@ using Api.Dtos;
 using Api.Exceptions;
 using Api.Exceptions.Base;
 using Api.Services.Predictors;
+using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 using Enum = System.Enum;
 
 namespace Api.Controllers;
@@ -28,6 +30,8 @@ public class PredictionController : ControllerBase
     }
     
     [HttpGet("Types")]
+    [SwaggerOperation(Summary = "Get a list of prediction types.", Description = "Get a list of all available prediction types.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
     public IActionResult GetTypes()
     {
         IEnumerable<string> types = Enum.GetNames(typeof(PredictionTypes));
@@ -35,6 +39,10 @@ public class PredictionController : ControllerBase
     }
     
     [HttpPost]
+    [SwaggerOperation(Summary = "Predicts the outcome of matches, championships, or player performance.", Description = "The input required can differ depending on the type of prediction being made.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     public IActionResult Predict([FromQuery]int type, [FromBody]JsonElement input)
     {
         try
