@@ -28,18 +28,18 @@ services:
     depends_on:
       - client
 
-  mysql:
-    image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'api_possibility'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-      - '3306:3306'
-    volumes:
-      - mysql:/var/lib/mysql
+  # mysql:
+  #   image: mysql:latest
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: 'api_possibility'
+  #     MYSQL_USER: 'user'
+  #     MYSQL_PASSWORD: 'password'
+  #     MYSQL_ROOT_PASSWORD: 'password'
+  #   ports:
+  #     - '3306:3306'
+  #   volumes: 
+  #     - mysql:/var/lib/mysql
 
-volumes:
-  mysql:
+# volumes:
+#   mysql:

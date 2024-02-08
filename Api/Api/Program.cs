@@ -1,3 +1,4 @@
+using Api.Services.Predictors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// PreCog Services
+builder.Services.AddScoped<PredictorFactory>();
 
 var app = builder.Build();
 
