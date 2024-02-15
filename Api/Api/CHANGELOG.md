@@ -27,3 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - [API-56] Mysql container from docker-compose
+
+### Security
+- [API-62] Added PredictionFactory unit tests
