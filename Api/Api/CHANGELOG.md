@@ -16,7 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Api project
-- Build job on github actions
 - [API-42] Predict route
 - [PDT-51] Predictor service
+- [API-10] Api project
+- [API-20] Build job on github actions
+- [API-42] Predict route
+- [API-56] BasePrecogExceptions
+- [API-57] Swagger doc
+
+### Changed
+- [API-56] Using Factory Method on predict route
+
+### Removed
+- [API-56] Mysql container from docker-compose

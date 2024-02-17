@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Api.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers;
 
@@ -7,17 +11,13 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class HealthController : ControllerBase
 {
-    private readonly ILogger<HealthController> _logger;
-
-    public HealthController(ILogger<HealthController> logger)
-    {
-        _logger = logger;
-    }
-
+    public HealthController() { }
+ 
     [HttpGet]
+    [SwaggerOperation(Summary = "Check if the application is healthy.", Description = "Check if the application is healthy.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     public IActionResult HealthCheck()
     {
-        _logger.LogInformation("Application is healthy.");
-        return Ok(200);
+        return Ok("Application is healthy.");
     }
 }

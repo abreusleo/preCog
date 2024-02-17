@@ -1,12 +1,18 @@
-using System;
-using System.Collections.Generic;
+using Api.Dtos;
 using Api.Enums;
+using Api.Exceptions.Base;
+using Api.Exceptions;
+using Api.Services.Predictors;
+using Enum = System.Enum;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
-using Api.Dtos;
-using Enum = System.Enum;
+using System;
 
 namespace Api.Controllers;
 
@@ -15,15 +21,17 @@ namespace Api.Controllers;
 public class PredictionController : ControllerBase
 {
     private readonly ILogger<PredictionController> _logger;
-    private readonly Predictor.PredictorClient _predictorClient;
+    private readonly PredictorFactory _predictorFactory;
 
-    public PredictionController(ILogger<PredictionController> logger, Predictor.PredictorClient predictorClient)
+    public PredictionController(ILogger<PredictionController> logger, PredictorFactory predictorFactory)
     {
         _logger = logger;
-        _predictorClient = predictorClient;
+        _predictorFactory = predictorFactory;
     }
     
     [HttpGet("Types")]
+    [SwaggerOperation(Summary = "Get a list of prediction types.", Description = "Get a list of all available prediction types.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
     public IActionResult GetTypes()
     {
         IEnumerable<string> types = Enum.GetNames(typeof(PredictionTypes));
@@ -32,32 +40,21 @@ public class PredictionController : ControllerBase
     
     [HttpPost]
     [Route("GRPC")]
-    public IActionResult Predict([FromQuery]PredictionTypes type, [FromBody]JsonElement input)
+    [SwaggerOperation(Summary = "Predicts the outcome of matches, championships, or player performance.", Description = "The input required can differ depending on the type of prediction being made.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+    public IActionResult Predict([FromQuery]int type, [FromBody]JsonElement input)
     {
-        PredictionOutput prediction;
-        //TODO: Think about using a Factory to predict the result
-        switch (type)
+        try
         {
-            case PredictionTypes.Players:
-                var playerInput = input.Deserialize<PlayerInput>();
-                _logger.LogTrace("Player prediction: {} x {}", playerInput.FirstPlayerId, playerInput.SecondPlayerId);
-                prediction = _predictorClient.PlayerPrediction(new PlayerInput { FirstPlayerId = playerInput.FirstPlayerId, SecondPlayerId = playerInput.SecondPlayerId });
-                return Ok(prediction.Id);
-
-            case PredictionTypes.Teams:
-                var teamInput = input.Deserialize<TeamInput>();
-                _logger.LogTrace("Team prediction: {} x {}", teamInput.FirstTeamId, teamInput.SecondTeamId);
-                prediction = _predictorClient.TeamPrediction(new TeamInput { FirstTeamId = teamInput.FirstTeamId, SecondTeamId = teamInput.SecondTeamId });
-                return Ok(prediction.Id);
-            
-            case PredictionTypes.Championships:
-                var championshipInput = input.Deserialize<ChampionshipInput>();
-                _logger.LogTrace("Championship prediction: {}", championshipInput.Id);
-                prediction = _predictorClient.ChampionshipPrediction(new ChampionshipInput { Id = championshipInput.Id });
-                return Ok(prediction.Id);
-            
-            default:
-                return NotFound();
+            Predictor predictor = _predictorFactory.Create(type);
+            return Ok(predictor.Predict(input));
+        }
+        catch (BasePrecogException e)
+        {
+            _logger.LogError("Exception caught while trying to predict result. StatusCode: {ExceptionStatusCode}, Message: {ExceptionMessage}", e.Message, e.StatusCode);
+            return StatusCode((int) e.StatusCode, e.Message);
         }
     }
 }

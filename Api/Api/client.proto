@@ -1,4 +1,4 @@
-service Predictor {
+service PredictorGrpc {
     rpc PlayerPrediction(PlayerInput) returns (PredictionOutput) {}
     rpc TeamPrediction(TeamInput) returns (PredictionOutput) {}
     rpc ChampionshipPrediction(ChampionshipInput) returns (PredictionOutput) {}

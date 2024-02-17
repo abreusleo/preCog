@@ -5,7 +5,7 @@ import grpc
 import predictor_server_pb2 as predictor__server__pb2
 
 
-class PredictorStub(object):
+class PredictorGrpcStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,33 +14,33 @@ class PredictorStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.TeamPrediction = channel.unary_unary(
-                '/Predictor/TeamPrediction',
-                request_serializer=predictor__server__pb2.TeamInput.SerializeToString,
-                response_deserializer=predictor__server__pb2.PredictionOutput.FromString,
-                )
         self.PlayerPrediction = channel.unary_unary(
-                '/Predictor/PlayerPrediction',
+                '/PredictorGrpc/PlayerPrediction',
                 request_serializer=predictor__server__pb2.PlayerInput.SerializeToString,
                 response_deserializer=predictor__server__pb2.PredictionOutput.FromString,
                 )
+        self.TeamPrediction = channel.unary_unary(
+                '/PredictorGrpc/TeamPrediction',
+                request_serializer=predictor__server__pb2.TeamInput.SerializeToString,
+                response_deserializer=predictor__server__pb2.PredictionOutput.FromString,
+                )
         self.ChampionshipPrediction = channel.unary_unary(
-                '/Predictor/ChampionshipPrediction',
+                '/PredictorGrpc/ChampionshipPrediction',
                 request_serializer=predictor__server__pb2.ChampionshipInput.SerializeToString,
                 response_deserializer=predictor__server__pb2.PredictionOutput.FromString,
                 )
 
 
-class PredictorServicer(object):
+class PredictorGrpcServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def TeamPrediction(self, request, context):
+    def PlayerPrediction(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def PlayerPrediction(self, request, context):
+    def TeamPrediction(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -53,16 +53,16 @@ class PredictorServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_PredictorServicer_to_server(servicer, server):
+def add_PredictorGrpcServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'TeamPrediction': grpc.unary_unary_rpc_method_handler(
-                    servicer.TeamPrediction,
-                    request_deserializer=predictor__server__pb2.TeamInput.FromString,
-                    response_serializer=predictor__server__pb2.PredictionOutput.SerializeToString,
-            ),
             'PlayerPrediction': grpc.unary_unary_rpc_method_handler(
                     servicer.PlayerPrediction,
                     request_deserializer=predictor__server__pb2.PlayerInput.FromString,
+                    response_serializer=predictor__server__pb2.PredictionOutput.SerializeToString,
+            ),
+            'TeamPrediction': grpc.unary_unary_rpc_method_handler(
+                    servicer.TeamPrediction,
+                    request_deserializer=predictor__server__pb2.TeamInput.FromString,
                     response_serializer=predictor__server__pb2.PredictionOutput.SerializeToString,
             ),
             'ChampionshipPrediction': grpc.unary_unary_rpc_method_handler(
@@ -72,30 +72,13 @@ def add_PredictorServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'Predictor', rpc_method_handlers)
+            'PredictorGrpc', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class Predictor(object):
+class PredictorGrpc(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def TeamPrediction(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Predictor/TeamPrediction',
-            predictor__server__pb2.TeamInput.SerializeToString,
-            predictor__server__pb2.PredictionOutput.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def PlayerPrediction(request,
@@ -108,8 +91,25 @@ class Predictor(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Predictor/PlayerPrediction',
+        return grpc.experimental.unary_unary(request, target, '/PredictorGrpc/PlayerPrediction',
             predictor__server__pb2.PlayerInput.SerializeToString,
+            predictor__server__pb2.PredictionOutput.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def TeamPrediction(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/PredictorGrpc/TeamPrediction',
+            predictor__server__pb2.TeamInput.SerializeToString,
             predictor__server__pb2.PredictionOutput.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -125,7 +125,7 @@ class Predictor(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Predictor/ChampionshipPrediction',
+        return grpc.experimental.unary_unary(request, target, '/PredictorGrpc/ChampionshipPrediction',
             predictor__server__pb2.ChampionshipInput.SerializeToString,
             predictor__server__pb2.PredictionOutput.FromString,
             options, channel_credentials,

@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Api.Dtos;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers;
 
@@ -18,6 +20,8 @@ public class TeamController : ControllerBase
     }
         
     [HttpGet]
+    [SwaggerOperation(Summary = "Get a list of all teams.", Description = "Get a list of all available teams.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetPossibleTeamsDto>))]
     public IActionResult GetPossibleTeams()
     {
         GetPossibleTeamsDto dto = new GetPossibleTeamsDto { Id = 0, Name = "Loud", Acronym = "LOUD", LogoUrl = "https://yt3.googleusercontent.com/hBufrTeLwDxrrZOjMsQEooQrne6pRAhdSFhOivYfq5gywsmpYmmRLK24YaDZKN3AdGNvX0Z0=s900-c-k-c0x00ffffff-no-rj"};

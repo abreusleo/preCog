@@ -4,7 +4,7 @@ import predictor_server_pb2_grpc as pb2_grpc
 import predictor_server_pb2 as pb2
 
 
-class PredictorService(pb2_grpc.PredictorServicer):
+class PredictorService(pb2_grpc.PredictorGrpcServicer):
 
     def __init__(self, *args, **kwargs):
         pass
@@ -36,7 +36,7 @@ class PredictorService(pb2_grpc.PredictorServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    pb2_grpc.add_PredictorServicer_to_server(PredictorService(), server)
+    pb2_grpc.add_PredictorGrpcServicer_to_server(PredictorService(), server)
     server.add_insecure_port('[::]:50051')
     server.start()
     print("Server running!")
