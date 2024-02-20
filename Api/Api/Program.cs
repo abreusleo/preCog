@@ -9,7 +9,7 @@ using Grpc.Net.Client;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o => o.Address = new Uri("http://localhost:50051"));
+builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o => o.Address = new Uri("dns:///predictor:50051")).ConfigurePrimaryHttpMessage(() => return new HttpClientHandler{ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator};);
 
 // Add services to the container.
 
