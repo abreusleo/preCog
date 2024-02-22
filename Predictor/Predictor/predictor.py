@@ -9,18 +9,18 @@ class PredictorService(pb2_grpc.PredictorGrpcServicer):
     def __init__(self, *args, **kwargs):
         pass
 
-    def TeamPrediction(self, request, context):
-        print("Received a request! Prediction for the following match: " , request.firstTeamId, " VS ", request.secondTeamId)
-        #Prediction
-        result_prediction = request.firstTeamId
-        result = {'id': result_prediction}
-
-        return pb2.PredictionOutput(**result)
-    
     def PlayerPrediction(self, request, context):
         print("Received a request! Prediction for the following players: " , request.firstPlayerId, " VS ", request.secondPlayerId)
         #Prediction
         result_prediction = request.firstPlayerId
+        result = {'id': result_prediction}
+
+        return pb2.PredictionOutput(**result)
+
+    def TeamPrediction(self, request, context):
+        print("Received a request! Prediction for the following match: " , request.firstTeamId, " VS ", request.secondTeamId)
+        #Prediction
+        result_prediction = request.firstTeamId
         result = {'id': result_prediction}
 
         return pb2.PredictionOutput(**result)
@@ -33,7 +33,6 @@ class PredictorService(pb2_grpc.PredictorGrpcServicer):
 
         return pb2.PredictionOutput(**result)
 
-
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2_grpc.add_PredictorGrpcServicer_to_server(PredictorService(), server)
@@ -41,7 +40,6 @@ def serve():
     server.start()
     print("Server running!")
     server.wait_for_termination()
-
 
 if __name__ == '__main__':
     serve()

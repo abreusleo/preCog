@@ -1,23 +1,36 @@
 service PredictorGrpc {
-    rpc PlayerPrediction(PlayerInput) returns (PredictionOutput) {}
-    rpc TeamPrediction(TeamInput) returns (PredictionOutput) {}
-    rpc ChampionshipPrediction(ChampionshipInput) returns (PredictionOutput) {}
+    rpc PlayerPrediction(PlayerInput) returns (PlayerPredictionOutput) {}
+    rpc TeamPrediction(TeamInput) returns (TeamPredictionOutput) {}
+    rpc ChampionshipPrediction(ChampionshipInput) returns (ChampionshipPredictionOutput) {}
 }
 
 message PlayerInput {
-    required int32 firstPlayerId = 1;
-    required int32 secondPlayerId = 2;
+    required PlayerObj firstPlayer = 1;
+    required PlayerObj secondPlayer = 2;
+}
+
+message PlayerObj {
+    required string nickname = 1;
+    required string team = 2;
 }
 
 message TeamInput {
-    required int32 firstTeamId = 1;
-    required int32 secondTeamId = 2;
+    required string firstTeamAcronym = 1;
+    required string secondTeamAcronym = 2;
 }
 
 message ChampionshipInput {
-    required int32 id = 1;
+    required string championshipName = 1;
 }
 
-message PredictionOutput {
-    required int32 id = 1;
+message PlayerPredictionOutput {
+    required PlayerObj player = 1;
+}
+
+message TeamPredictionOutput {
+    required string name = 1;
+}
+
+message ChampionshipPredictionOutput {
+    required string name = 1;
 }
