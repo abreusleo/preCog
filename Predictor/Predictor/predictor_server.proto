@@ -20,7 +20,7 @@ message TeamInput {
 }
 
 message ChampionshipInput {
-    required string championshipName = 1;
+    required string name = 1;
 }
 
 message PlayerPredictionOutput {
@@ -32,5 +32,5 @@ message TeamPredictionOutput {
 }
 
 message ChampionshipPredictionOutput {
-    required string name = 1;
+    required string winnerName = 1;
 }

@@ -19,12 +19,17 @@ public class ChampionshipPredictor : Predictor
 
     public override int Predict(JsonElement input)
     {
-        ChampionshipInput championshipInput;
-        PredictionOutput prediction;
+        ChampionshipInputDto championshipInput;
+        ChampionshipPredictionOutput prediction;
         try
         { 
-            championshipInput = JsonConvert.DeserializeObject<ChampionshipInput>(input.GetRawText());
-            prediction = _predictorClient.ChampionshipPrediction(new ChampionshipInput { Id = championshipInput.Id });
+            championshipInput = JsonConvert.DeserializeObject<ChampionshipInputDto>(input.GetRawText());
+
+            //DB Requisition to get the championship obj
+
+            string championshipName = "campeonatinho";
+
+            prediction = _predictorClient.ChampionshipPrediction(new ChampionshipInput { Name = championshipName });
         }
         catch (Exception e)
         {
@@ -32,6 +37,6 @@ public class ChampionshipPredictor : Predictor
         }
         
         _logger.LogDebug("Championship prediction: {}", championshipInput.Id);
-        return championshipInput.Id;
+        return championshipInput.Id; //change to a JSON format return
     }
 }

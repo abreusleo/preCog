@@ -34,7 +34,7 @@ builder.Services.AddScoped<PredictorFactory>();
 // Grpc
 builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o =>
 {
-    o.Address = new Uri("dns:///predictor:50051");
+    o.Address = new Uri("http://localhost:50051");
     o.ChannelOptionsActions.Add((Action<GrpcChannelOptions>) (opt =>
     {
         opt.HttpHandler = (HttpMessageHandler) new SocketsHttpHandler()

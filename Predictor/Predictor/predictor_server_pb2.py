@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16predictor_server.proto\"<\n\x0bPlayerInput\x12\x15\n\rfirstPlayerId\x18\x01 \x02(\x05\x12\x16\n\x0esecondPlayerId\x18\x02 \x02(\x05\"6\n\tTeamInput\x12\x13\n\x0b\x66irstTeamId\x18\x01 \x02(\x05\x12\x14\n\x0csecondTeamId\x18\x02 \x02(\x05\"\x1f\n\x11\x43hampionshipInput\x12\n\n\x02id\x18\x01 \x02(\x05\"\x1e\n\x10PredictionOutput\x12\n\n\x02id\x18\x01 \x02(\x05\x32\xbc\x01\n\rPredictorGrpc\x12\x35\n\x10PlayerPrediction\x12\x0c.PlayerInput\x1a\x11.PredictionOutput\"\x00\x12\x31\n\x0eTeamPrediction\x12\n.TeamInput\x1a\x11.PredictionOutput\"\x00\x12\x41\n\x16\x43hampionshipPrediction\x12\x12.ChampionshipInput\x1a\x11.PredictionOutput\"\x00')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16predictor_server.proto\"P\n\x0bPlayerInput\x12\x1f\n\x0b\x66irstPlayer\x18\x01 \x02(\x0b\x32\n.PlayerObj\x12 \n\x0csecondPlayer\x18\x02 \x02(\x0b\x32\n.PlayerObj\"+\n\tPlayerObj\x12\x10\n\x08nickname\x18\x01 \x02(\t\x12\x0c\n\x04team\x18\x02 \x02(\t\"@\n\tTeamInput\x12\x18\n\x10\x66irstTeamAcronym\x18\x01 \x02(\t\x12\x19\n\x11secondTeamAcronym\x18\x02 \x02(\t\"!\n\x11\x43hampionshipInput\x12\x0c\n\x04name\x18\x01 \x02(\t\"4\n\x16PlayerPredictionOutput\x12\x1a\n\x06player\x18\x01 \x02(\x0b\x32\n.PlayerObj\"$\n\x14TeamPredictionOutput\x12\x0c\n\x04name\x18\x01 \x02(\t\"2\n\x1c\x43hampionshipPredictionOutput\x12\x12\n\nwinnerName\x18\x01 \x02(\t2\xd2\x01\n\rPredictorGrpc\x12;\n\x10PlayerPrediction\x12\x0c.PlayerInput\x1a\x17.PlayerPredictionOutput\"\x00\x12\x35\n\x0eTeamPrediction\x12\n.TeamInput\x1a\x15.TeamPredictionOutput\"\x00\x12M\n\x16\x43hampionshipPrediction\x12\x12.ChampionshipInput\x1a\x1d.ChampionshipPredictionOutput\"\x00')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,13 +22,19 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'predictor_server_pb2', _glo
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _globals['_PLAYERINPUT']._serialized_start=26
-  _globals['_PLAYERINPUT']._serialized_end=86
-  _globals['_TEAMINPUT']._serialized_start=88
-  _globals['_TEAMINPUT']._serialized_end=142
-  _globals['_CHAMPIONSHIPINPUT']._serialized_start=144
-  _globals['_CHAMPIONSHIPINPUT']._serialized_end=175
-  _globals['_PREDICTIONOUTPUT']._serialized_start=177
-  _globals['_PREDICTIONOUTPUT']._serialized_end=207
-  _globals['_PREDICTORGRPC']._serialized_start=210
-  _globals['_PREDICTORGRPC']._serialized_end=398
+  _globals['_PLAYERINPUT']._serialized_end=106
+  _globals['_PLAYEROBJ']._serialized_start=108
+  _globals['_PLAYEROBJ']._serialized_end=151
+  _globals['_TEAMINPUT']._serialized_start=153
+  _globals['_TEAMINPUT']._serialized_end=217
+  _globals['_CHAMPIONSHIPINPUT']._serialized_start=219
+  _globals['_CHAMPIONSHIPINPUT']._serialized_end=252
+  _globals['_PLAYERPREDICTIONOUTPUT']._serialized_start=254
+  _globals['_PLAYERPREDICTIONOUTPUT']._serialized_end=306
+  _globals['_TEAMPREDICTIONOUTPUT']._serialized_start=308
+  _globals['_TEAMPREDICTIONOUTPUT']._serialized_end=344
+  _globals['_CHAMPIONSHIPPREDICTIONOUTPUT']._serialized_start=346
+  _globals['_CHAMPIONSHIPPREDICTIONOUTPUT']._serialized_end=396
+  _globals['_PREDICTORGRPC']._serialized_start=399
+  _globals['_PREDICTORGRPC']._serialized_end=609
 # @@protoc_insertion_point(module_scope)

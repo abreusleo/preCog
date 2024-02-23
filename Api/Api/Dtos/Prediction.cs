@@ -4,13 +4,13 @@ using Newtonsoft.Json;
 
 namespace Api.Dtos;
 
-public class Prediction
+public class PredictionDto
 {
     public PredictionTypes Type { get; set; }
     public JsonElement Input { get; set; }
 }
 
-public class TeamInput
+public class TeamInputDto
 {
     [JsonProperty(Required = Required.Always)]
     public int FirstTeamId { get; set; }
@@ -19,13 +19,13 @@ public class TeamInput
     public int SecondTeamId { get; set; }
 }
 
-public class ChampionshipInput
+public class ChampionshipInputDto
 {
     [JsonProperty(Required = Required.Always)]
     public int Id { get; set; }
 }
 
-public class PlayerInput
+public class PlayerInputDto
 {
     [JsonProperty(Required = Required.Always)]
     public int FirstPlayerId { get; set; }

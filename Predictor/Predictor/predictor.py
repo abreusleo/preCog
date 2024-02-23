@@ -2,7 +2,10 @@ import grpc
 from concurrent import futures
 import predictor_server_pb2_grpc as pb2_grpc
 import predictor_server_pb2 as pb2
+from dotenv import load_dotenv
+import os
 
+load_dotenv('../../.env')
 
 class PredictorService(pb2_grpc.PredictorGrpcServicer):
 
@@ -36,6 +39,7 @@ class PredictorService(pb2_grpc.PredictorGrpcServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2_grpc.add_PredictorGrpcServicer_to_server(PredictorService(), server)
+    PORT_ENV = os.environ['PREDICTOR_PORT']
     server.add_insecure_port('[::]:50051')
     server.start()
     print("Server running!")

@@ -19,12 +19,24 @@ public class PlayerPredictor : Predictor
     
     public override int Predict(JsonElement input)
     {
-        PlayerInput playerInput;
-        PredictionOutput prediction;
+        PlayerInputDto playerInput;
+        PlayerPredictionOutput prediction;
         try
         { 
-            playerInput = JsonConvert.DeserializeObject<PlayerInput>(input.GetRawText());
-            prediction = _predictorClient.PlayerPrediction(new PlayerInput { FirstPlayerId = playerInput.FirstPlayerId, SecondPlayerId = playerInput.SecondPlayerId });
+            playerInput = JsonConvert.DeserializeObject<PlayerInputDto>(input.GetRawText());
+
+            //DB Requisition to get the player obj
+
+            string firstPlayerNickname = "bruninhobrabo";
+            string firstPlayerTeam = "ABCD";
+
+            string secondPlayerNickname = "carlosboladao";
+            string secondPlayerTeam = "EFGH";
+
+            prediction = _predictorClient.PlayerPrediction(new PlayerInput { 
+                FirstPlayer = new PlayerObj { Nickname = firstPlayerNickname, Team = firstPlayerTeam }, 
+                SecondPlayer = new PlayerObj { Nickname = secondPlayerNickname, Team = secondPlayerTeam } 
+            });
         }
         catch (Exception e)
         {

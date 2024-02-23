@@ -17,17 +17,17 @@ class PredictorGrpcStub(object):
         self.PlayerPrediction = channel.unary_unary(
                 '/PredictorGrpc/PlayerPrediction',
                 request_serializer=predictor__server__pb2.PlayerInput.SerializeToString,
-                response_deserializer=predictor__server__pb2.PredictionOutput.FromString,
+                response_deserializer=predictor__server__pb2.PlayerPredictionOutput.FromString,
                 )
         self.TeamPrediction = channel.unary_unary(
                 '/PredictorGrpc/TeamPrediction',
                 request_serializer=predictor__server__pb2.TeamInput.SerializeToString,
-                response_deserializer=predictor__server__pb2.PredictionOutput.FromString,
+                response_deserializer=predictor__server__pb2.TeamPredictionOutput.FromString,
                 )
         self.ChampionshipPrediction = channel.unary_unary(
                 '/PredictorGrpc/ChampionshipPrediction',
                 request_serializer=predictor__server__pb2.ChampionshipInput.SerializeToString,
-                response_deserializer=predictor__server__pb2.PredictionOutput.FromString,
+                response_deserializer=predictor__server__pb2.ChampionshipPredictionOutput.FromString,
                 )
 
 
@@ -58,17 +58,17 @@ def add_PredictorGrpcServicer_to_server(servicer, server):
             'PlayerPrediction': grpc.unary_unary_rpc_method_handler(
                     servicer.PlayerPrediction,
                     request_deserializer=predictor__server__pb2.PlayerInput.FromString,
-                    response_serializer=predictor__server__pb2.PredictionOutput.SerializeToString,
+                    response_serializer=predictor__server__pb2.PlayerPredictionOutput.SerializeToString,
             ),
             'TeamPrediction': grpc.unary_unary_rpc_method_handler(
                     servicer.TeamPrediction,
                     request_deserializer=predictor__server__pb2.TeamInput.FromString,
-                    response_serializer=predictor__server__pb2.PredictionOutput.SerializeToString,
+                    response_serializer=predictor__server__pb2.TeamPredictionOutput.SerializeToString,
             ),
             'ChampionshipPrediction': grpc.unary_unary_rpc_method_handler(
                     servicer.ChampionshipPrediction,
                     request_deserializer=predictor__server__pb2.ChampionshipInput.FromString,
-                    response_serializer=predictor__server__pb2.PredictionOutput.SerializeToString,
+                    response_serializer=predictor__server__pb2.ChampionshipPredictionOutput.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -93,7 +93,7 @@ class PredictorGrpc(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/PredictorGrpc/PlayerPrediction',
             predictor__server__pb2.PlayerInput.SerializeToString,
-            predictor__server__pb2.PredictionOutput.FromString,
+            predictor__server__pb2.PlayerPredictionOutput.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -110,7 +110,7 @@ class PredictorGrpc(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/PredictorGrpc/TeamPrediction',
             predictor__server__pb2.TeamInput.SerializeToString,
-            predictor__server__pb2.PredictionOutput.FromString,
+            predictor__server__pb2.TeamPredictionOutput.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -127,6 +127,6 @@ class PredictorGrpc(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/PredictorGrpc/ChampionshipPrediction',
             predictor__server__pb2.ChampionshipInput.SerializeToString,
-            predictor__server__pb2.PredictionOutput.FromString,
+            predictor__server__pb2.ChampionshipPredictionOutput.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

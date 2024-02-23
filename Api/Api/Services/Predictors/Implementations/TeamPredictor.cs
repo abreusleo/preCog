@@ -19,12 +19,18 @@ public class TeamPredictor : Predictor
     
     public override int Predict(JsonElement input)
     {
-        TeamInput teamInput;
-        PredictionOutput prediction;
+        TeamInputDto teamInput;
+        TeamPredictionOutput prediction;
         try
         { 
-            teamInput = JsonConvert.DeserializeObject<TeamInput>(input.GetRawText());
-            prediction = _predictorClient.TeamPrediction(new TeamInput { FirstTeamId = teamInput.FirstTeamId, SecondTeamId = teamInput.SecondTeamId });
+            teamInput = JsonConvert.DeserializeObject<TeamInputDto>(input.GetRawText());
+
+            //DB Requisition to get the team obj
+
+            string firstTeamName = "ABCD";
+            string secondTeamName = "EFGH";
+
+            prediction = _predictorClient.TeamPrediction(new TeamInput { FirstTeamAcronym = firstTeamName, SecondTeamAcronym = secondTeamName });
         }
         catch (Exception e)
         {
