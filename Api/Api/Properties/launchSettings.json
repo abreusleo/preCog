@@ -16,7 +16,9 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:4000;http://localhost:4001",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PREDICTOR_PORT": "50051",
+        "API_HOST_URI": "http://localhost:"
       }
     }
   }

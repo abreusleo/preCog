@@ -24,17 +24,17 @@ public class ChampionshipPredictor : Predictor
         try
         { 
             championshipInput = JsonConvert.DeserializeObject<ChampionshipInputDto>(input.GetRawText());
-
-            //DB Requisition to get the championship obj
-
-            string championshipName = "campeonatinho";
-
-            prediction = _predictorClient.ChampionshipPrediction(new ChampionshipInput { Name = championshipName });
         }
         catch (Exception e)
         {
             throw new InvalidPredictionInputException();
         }
+
+        //DB Requisition to get the championship obj
+
+        string championshipName = "campeonatinho";
+
+        prediction = _predictorClient.ChampionshipPrediction(new ChampionshipInput { Name = championshipName });
         
         _logger.LogDebug("Championship prediction: {}", championshipInput.Id);
         return championshipInput.Id; //change to a JSON format return

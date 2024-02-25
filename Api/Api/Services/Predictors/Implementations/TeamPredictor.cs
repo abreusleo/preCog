@@ -24,18 +24,17 @@ public class TeamPredictor : Predictor
         try
         { 
             teamInput = JsonConvert.DeserializeObject<TeamInputDto>(input.GetRawText());
-
-            //DB Requisition to get the team obj
-
-            string firstTeamName = "ABCD";
-            string secondTeamName = "EFGH";
-
-            prediction = _predictorClient.TeamPrediction(new TeamInput { FirstTeamAcronym = firstTeamName, SecondTeamAcronym = secondTeamName });
         }
         catch (Exception e)
         {
             throw new InvalidPredictionInputException();
         }
+
+        //DB Requisition to get the team obj
+        
+        string firstTeamName = "ABCD";
+        string secondTeamName = "EFGH";
+        prediction = _predictorClient.TeamPrediction(new TeamInput { FirstTeamAcronym = firstTeamName, SecondTeamAcronym = secondTeamName });
         
         _logger.LogDebug("Team prediction: {} x {}", teamInput.FirstTeamId, teamInput.SecondTeamId);
         return teamInput.FirstTeamId;

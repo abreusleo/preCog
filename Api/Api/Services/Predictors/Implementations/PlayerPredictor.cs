@@ -24,24 +24,24 @@ public class PlayerPredictor : Predictor
         try
         { 
             playerInput = JsonConvert.DeserializeObject<PlayerInputDto>(input.GetRawText());
-
-            //DB Requisition to get the player obj
-
-            string firstPlayerNickname = "bruninhobrabo";
-            string firstPlayerTeam = "ABCD";
-
-            string secondPlayerNickname = "carlosboladao";
-            string secondPlayerTeam = "EFGH";
-
-            prediction = _predictorClient.PlayerPrediction(new PlayerInput { 
-                FirstPlayer = new PlayerObj { Nickname = firstPlayerNickname, Team = firstPlayerTeam }, 
-                SecondPlayer = new PlayerObj { Nickname = secondPlayerNickname, Team = secondPlayerTeam } 
-            });
         }
         catch (Exception e)
         {
             throw new InvalidPredictionInputException();
         }
+
+        //DB Requisition to get the player obj
+
+        string firstPlayerNickname = "bruninhobrabo";
+        string firstPlayerTeam = "ABCD";
+
+        string secondPlayerNickname = "carlosboladao";
+        string secondPlayerTeam = "EFGH";
+
+        prediction = _predictorClient.PlayerPrediction(new PlayerInput { 
+            FirstPlayer = new PlayerObj { Nickname = firstPlayerNickname, Team = firstPlayerTeam }, 
+            SecondPlayer = new PlayerObj { Nickname = secondPlayerNickname, Team = secondPlayerTeam } 
+        });
         
         _logger.LogDebug("Player prediction: {} x {}", playerInput.FirstPlayerId, playerInput.SecondPlayerId);
         return playerInput.FirstPlayerId;

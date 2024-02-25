@@ -13,34 +13,34 @@ class PredictorService(pb2_grpc.PredictorGrpcServicer):
         pass
 
     def PlayerPrediction(self, request, context):
-        print("Received a request! Prediction for the following players: " , request.firstPlayerId, " VS ", request.secondPlayerId)
+        print("Received a request! Prediction for the following players: %s VS %s" % (request.firstPlayer.nickname, request.secondPlayer.nickname))
         #Prediction
-        result_prediction = request.firstPlayerId
-        result = {'id': result_prediction}
+        result_prediction = request.firstPlayer
+        result = {'player': result_prediction}
 
-        return pb2.PredictionOutput(**result)
+        return pb2.PlayerPredictionOutput(**result)
 
     def TeamPrediction(self, request, context):
-        print("Received a request! Prediction for the following match: " , request.firstTeamId, " VS ", request.secondTeamId)
+        print("Received a request! Prediction for the following match: %s VS %s" % (request.firstTeamAcronym, request.secondTeamAcronym))
         #Prediction
-        result_prediction = request.firstTeamId
-        result = {'id': result_prediction}
+        result_prediction = request.firstTeamAcronym
+        result = {'name': result_prediction}
 
-        return pb2.PredictionOutput(**result)
+        return pb2.TeamPredictionOutput(**result)
     
     def ChampionshipPrediction(self, request, context):
-        print("Received a request! Prediction for the following championship: " , request.id)
+        print("Received a request! Prediction for the following championship: %s" % request.name)
         #Prediction
         result_prediction = 1
-        result = {'id': result_prediction}
-
-        return pb2.PredictionOutput(**result)
+        result = {'winnerName': result_prediction}
+ 
+        return pb2.ChampionshipPredictionOutput(**result)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2_grpc.add_PredictorGrpcServicer_to_server(PredictorService(), server)
     PORT_ENV = os.environ['PREDICTOR_PORT']
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('[::]:%s' % PORT_ENV)
     server.start()
     print("Server running!")
     server.wait_for_termination()
