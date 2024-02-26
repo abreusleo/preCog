@@ -14,7 +14,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 string PREDICTOR_PORT = Environment.GetEnvironmentVariable("PREDICTOR_PORT");
-string API_HOST_URI = Environment.GetEnvironmentVariable("API_HOST_URI");
+string PREDICTOR_HOST_URI = Environment.GetEnvironmentVariable("PREDICTOR_HOST_URI");
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -36,7 +36,7 @@ builder.Services.AddScoped<PredictorFactory>();
 // Grpc
 builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o =>
 {
-    o.Address = new Uri(API_HOST_URI + PREDICTOR_PORT);
+    o.Address = new Uri(PREDICTOR_HOST_URI + ":" + PREDICTOR_PORT);
     o.ChannelOptionsActions.Add((Action<GrpcChannelOptions>) (opt =>
     {
         opt.HttpHandler = (HttpMessageHandler) new SocketsHttpHandler()
