@@ -1,0 +1,8 @@
+FROM python:3.10-alpine
+WORKDIR /app
+RUN apk add --no-cache gcc musl-dev linux-headers
+COPY ./Predictor/requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 50051
+COPY . .
+CMD ["python", "Predictor/predictor.py"]

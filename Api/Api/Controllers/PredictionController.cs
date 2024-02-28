@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
+using Api.Dtos;
 using Api.Enums;
+using Api.Exceptions.Base;
+using Api.Exceptions;
+using Api.Services.Predictors;
+using Enum = System.Enum;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
-using Api.Dtos;
-using Api.Exceptions;
-using Api.Exceptions.Base;
-using Api.Services.Predictors;
-using Microsoft.AspNetCore.Http;
-using Swashbuckle.AspNetCore.Annotations;
-using Enum = System.Enum;
+using System;
 
 namespace Api.Controllers;
 
@@ -39,6 +39,7 @@ public class PredictionController : ControllerBase
     }
     
     [HttpPost]
+    [Route("GRPC")]
     [SwaggerOperation(Summary = "Predicts the outcome of matches, championships, or player performance.", Description = "The input required can differ depending on the type of prediction being made.")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]

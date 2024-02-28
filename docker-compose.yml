@@ -7,6 +7,8 @@ services:
       - "4001:4001"
     env_file:
       - .env
+    networks:
+      - precog
 
   client:
     build: ./Client/.
@@ -16,6 +18,19 @@ services:
       - "3000:3000"
     env_file:
       - .env
+
+  predictor:
+    build: ./Predictor/.
+    image: "precog/predictor:${tag}"
+    container_name: Predictor
+    ports:
+      - "50051:50051"
+    env_file:
+      - .env
+    networks:
+      - precog
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   
   nginx:
     build: ./Client/nginx/.
@@ -27,6 +42,10 @@ services:
       - .env
     depends_on:
       - client
+
+networks:
+  precog:
+    driver: bridge
 
   # mysql:
   #   image: mysql:latest

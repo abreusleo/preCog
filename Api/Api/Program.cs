@@ -1,16 +1,22 @@
-using System;
-using System.IO;
-using System.Reflection;
 using Api.Services.Predictors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
+using System.Reflection;
+using System;
+using System.Net.Http;
+using System.Net.Security;
+using System.Threading;
+using Grpc.Core;
+using Grpc.Net.Client;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+string PREDICTOR_PORT = Environment.GetEnvironmentVariable("PREDICTOR_PORT");
+string PREDICTOR_HOST_URI = Environment.GetEnvironmentVariable("PREDICTOR_HOST_URI");
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(config =>
@@ -26,6 +32,23 @@ builder.Services.AddSwaggerGen(config =>
 
 // PreCog Services
 builder.Services.AddScoped<PredictorFactory>();
+
+// Grpc
+builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o =>
+{
+    o.Address = new Uri(PREDICTOR_HOST_URI + ":" + PREDICTOR_PORT);
+    o.ChannelOptionsActions.Add((Action<GrpcChannelOptions>) (opt =>
+    {
+        opt.HttpHandler = (HttpMessageHandler) new SocketsHttpHandler()
+        {
+            EnableMultipleHttp2Connections = true,
+            PooledConnectionIdleTimeout = Timeout.InfiniteTimeSpan,
+            KeepAlivePingDelay = TimeSpan.FromSeconds(60.0),
+            KeepAlivePingTimeout = TimeSpan.FromSeconds(60.0)
+        };
+        opt.Credentials = ChannelCredentials.Insecure; 
+    }));
+});
 
 var app = builder.Build();
 
