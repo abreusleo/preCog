@@ -5,7 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Api.Services.Predictors;
 
-public class PredictorFactory
+public interface IPredictorFactory
+{
+    public Predictor Create(PredictionTypes type);
+    public Predictor Create(int type);
+}
+
+public class PredictorFactory : IPredictorFactory
 {
     private readonly ILogger<Predictor> _logger;
     private readonly PredictorGrpc.PredictorGrpcClient _predictorClient;
