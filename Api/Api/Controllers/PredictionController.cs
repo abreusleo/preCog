@@ -1,13 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Api.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Net;
 using System.Text.Json;
-using Api.Dtos;
-using Api.Exceptions;
 using Api.Exceptions.Base;
 using Api.Services.Predictors;
 using Microsoft.AspNetCore.Http;
