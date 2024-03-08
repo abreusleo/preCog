@@ -26,8 +26,7 @@ public class HealthController : ControllerBase
     {
         try
         {
-            var boolean = _uow.Connect();
-            return Ok(boolean);
+            return Ok(_uow.Connect());
         }
         catch (Exception e)
         {
