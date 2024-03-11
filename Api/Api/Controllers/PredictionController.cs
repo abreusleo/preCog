@@ -1,18 +1,13 @@
-using Api.Dtos;
+using System.Collections.Generic;
 using Api.Enums;
 using Api.Exceptions.Base;
-using Api.Exceptions;
 using Api.Services.Predictors;
 using Enum = System.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Text.Json;
-using System;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers;
 

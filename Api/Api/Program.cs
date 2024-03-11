@@ -1,64 +1,97 @@
 using Api.Services.Predictors;
+using Api.Storage;
+using Api.Storage.Context;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IO;
-using System.Reflection;
 using System;
 using System.Net.Http;
-using System.Net.Security;
 using System.Threading;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.OpenApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
-string PREDICTOR_PORT = Environment.GetEnvironmentVariable("PREDICTOR_PORT");
-string PREDICTOR_HOST_URI = Environment.GetEnvironmentVariable("PREDICTOR_HOST_URI");
+namespace Api;
 
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(config =>
+internal abstract class Program
 {
-    config.SwaggerDoc("v1", new OpenApiInfo
+    public static void Main(string[] args)
     {
-        Title = "preCog API",
-        Version = "v1"
-    });
+        var builder = WebApplication.CreateBuilder(args);
+        string PREDICTOR_PORT = Environment.GetEnvironmentVariable("PREDICTOR_PORT");
+        string PREDICTOR_HOST_URI = Environment.GetEnvironmentVariable("PREDICTOR_HOST_URI");
 
-    config.EnableAnnotations();
-});
+        // Add services to the container.
 
-// PreCog Services
-builder.Services.AddScoped<PredictorFactory>();
-
-// Grpc
-builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o =>
-{
-    o.Address = new Uri(PREDICTOR_HOST_URI + ":" + PREDICTOR_PORT);
-    o.ChannelOptionsActions.Add((Action<GrpcChannelOptions>) (opt =>
-    {
-        opt.HttpHandler = (HttpMessageHandler) new SocketsHttpHandler()
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(config =>
         {
-            EnableMultipleHttp2Connections = true,
-            PooledConnectionIdleTimeout = Timeout.InfiniteTimeSpan,
-            KeepAlivePingDelay = TimeSpan.FromSeconds(60.0),
-            KeepAlivePingTimeout = TimeSpan.FromSeconds(60.0)
-        };
-        opt.Credentials = ChannelCredentials.Insecure; 
-    }));
-});
+            config.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "preCog API",
+                Version = "v1"
+            });
 
-var app = builder.Build();
+            config.EnableAnnotations();
+        });
+        
+        builder.Configuration.AddEnvironmentVariables();
+        // Grpc
+        builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o =>
+        {
+            o.Address = new Uri(PREDICTOR_HOST_URI + ":" + PREDICTOR_PORT);
+            o.ChannelOptionsActions.Add((Action<GrpcChannelOptions>) (opt =>
+            {
+                opt.HttpHandler = (HttpMessageHandler) new SocketsHttpHandler()
+                {
+                    EnableMultipleHttp2Connections = true,
+                    PooledConnectionIdleTimeout = Timeout.InfiniteTimeSpan,
+                    KeepAlivePingDelay = TimeSpan.FromSeconds(60.0),
+                    KeepAlivePingTimeout = TimeSpan.FromSeconds(60.0)
+                };
+                opt.Credentials = ChannelCredentials.Insecure; 
+            }));
+        });
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        // PreCog Services
+        builder.Services.AddScoped<PredictorFactory>();
+
+        // DB
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork<MySqlContext>>();
+        builder.Services.AddPooledDbContextFactory<MySqlContext>((sp, options) =>
+        {
+            var host = Environment.GetEnvironmentVariable("MariaDb_Configuration__Host");
+            var port = Environment.GetEnvironmentVariable("MariaDb_Configuration__Port");
+            var database = Environment.GetEnvironmentVariable("MariaDb_Configuration__Database");
+            var username = Environment.GetEnvironmentVariable("MariaDb_Configuration__Username");
+            var password = Environment.GetEnvironmentVariable("MariaDb_Configuration__Password");
+            
+            string connectionString = $"Server={host};Port={port};Database={database};Uid={username};Pwd={password};";
+
+            options.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        });
+
+        var app = builder.Build();
+        
+        // UOW Migration
+        using (var scope = app.Services.CreateScope())
+        {
+            IUnitOfWork uow = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+            uow.Migrate();
+        }
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        
+        app.UseAuthorization();
+        app.MapControllers();
+        app.Run();
+    }
 }
-
-app.UseAuthorization();
-app.MapControllers();
-app.Run();

@@ -9,6 +9,8 @@ services:
       - .env
     networks:
       - precog
+    depends_on:
+      - mariadb
 
   client:
     build: ./Client/.
@@ -43,22 +45,23 @@ services:
     depends_on:
       - client
 
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MariaDb_Configuration__Password}
+      MARIADB_DATABASE: ${MariaDb_Configuration__Database}
+    ports:
+      - '3306:3306'
+    volumes: 
+      - mariadb:/var/lib/mariadb
+    networks:
+      - precog
+
+volumes:
+  mariadb:
+
 networks:
   precog:
     driver: bridge
-
-  # mysql:
-  #   image: mysql:latest
-  #   restart: always
-  #   environment:
-  #     MYSQL_DATABASE: 'api_possibility'
-  #     MYSQL_USER: 'user'
-  #     MYSQL_PASSWORD: 'password'
-  #     MYSQL_ROOT_PASSWORD: 'password'
-  #   ports:
-  #     - '3306:3306'
-  #   volumes: 
-  #     - mysql:/var/lib/mysql
-
-# volumes:
-#   mysql:

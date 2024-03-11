@@ -5,14 +5,15 @@ using Api.Exceptions;
 
 namespace Api.UnitTests;
 
-public abstract class Fixture
+public class Fixture
 {
     public IPredictorFactory Factory { get; set; }
 
-    protected Fixture()
+    public Fixture()
     {
         Mock<ILogger<Predictor>> logger = new();
-        Factory = new PredictorFactory(logger.Object);
+        Mock<PredictorGrpc.PredictorGrpcClient> grpcClient = new();
+        Factory = new PredictorFactory(logger.Object, grpcClient.Object);
     }
     public void Dispose() { }
 }
@@ -21,8 +22,9 @@ public class PredictorFactoryTests : IClassFixture<Fixture>
 {
     private readonly IPredictorFactory _predictorFactory;
 
-    public PredictorFactoryTests(Fixture fixture)
+    public PredictorFactoryTests()
     {
+        Fixture fixture = new Fixture();
         _predictorFactory = fixture.Factory;
     }
 

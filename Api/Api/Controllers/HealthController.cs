@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using Api.Dtos;
+﻿using System;
+using Api.Storage;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers;
@@ -11,13 +10,24 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class HealthController : ControllerBase
 {
-    public HealthController() { }
+    private readonly IUnitOfWork _uow;
+    public HealthController(IUnitOfWork uow)
+    {
+        _uow = uow;
+    }
  
     [HttpGet]
     [SwaggerOperation(Summary = "Check if the application is healthy.", Description = "Check if the application is healthy.")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     public IActionResult HealthCheck()
     {
-        return Ok("Application is healthy.");
+        try
+        {
+            return Ok(_uow.Connect());
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 }

@@ -1,5 +1,3 @@
-using Api.Enums;
-
 namespace Api.Dtos;
 
 public class GetPossibleChampionshipsDto
