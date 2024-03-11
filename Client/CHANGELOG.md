@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Desktop homepage
 - Login and Register modal
 - [API-42] Prediction menu
+- [CLT-52] Integrate prediction
+- Carrosel and prediction type
+- Add section Upcoming Matches
 
 ### Fixed
 

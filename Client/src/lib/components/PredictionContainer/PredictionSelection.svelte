@@ -61,10 +61,11 @@
   }
 </script>
 
-<div
-  class="mb-5 mt-10 flex h-64 w-[85%] flex-col items-center justify-between rounded-md bg-prediction-container-grey p-6 shadow-lg"
+<div class="flex flex-col items-center w-[95%] gap-4">
+  <div
+  class="flex h-44 w-[90%] flex-col items-center justify-between rounded-md bg-prediction-container-grey shadow-lg"
 >
-  <div class="flex w-full items-center justify-between">
+  <div class="flex w-[85%] items-center justify-between">
     {#if activeType === 'Players'}
       <div class="flex flex-col items-center">
         <div class="mb-3 h-16 w-16 rounded-md bg-grey">
@@ -124,10 +125,12 @@
       </div>
     {/if}
   </div>
-  <button
-    class="flex h-12 w-28 items-center justify-center rounded-md bg-red-500 font-primary text-sm text-light-pink"
-    on:click={() => handleClick(activeType)}
-  >
-    PREDICT
-  </button>
 </div>
+<button
+  class="flex h-12 w-28 items-center justify-center rounded-md bg-red-500 font-primary text-sm text-light-pink"
+  on:click={() => handleClick(activeType)}
+>
+  PREDICT
+</button>
+</div>
+
