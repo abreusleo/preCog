@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [API-42] Predict route
 - [API-56] BasePrecogExceptions
 - [API-57] Swagger doc
+- [API-67] MariaDb connection
 
 ### Changed
 - [API-56] Using Factory Method on predict route
