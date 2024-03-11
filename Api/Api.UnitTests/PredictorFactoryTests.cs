@@ -12,7 +12,8 @@ public class Fixture
     public Fixture()
     {
         Mock<ILogger<Predictor>> logger = new();
-        Factory = new PredictorFactory(logger.Object);
+        Mock<PredictorGrpc.PredictorGrpcClient> grpcClient = new();
+        Factory = new PredictorFactory(logger.Object, grpcClient.Object);
     }
     public void Dispose() { }
 }
