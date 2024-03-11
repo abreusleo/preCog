@@ -37,8 +37,8 @@ services:
     container_name: mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MariaDb_Configuration__Password}
-      MYSQL_DATABASE: ${MariaDb_Configuration__Database}
+      MARIADB_ROOT_PASSWORD: ${MariaDb_Configuration__Password}
+      MARIADB_DATABASE: ${MariaDb_Configuration__Database}
     ports:
       - '3306:3306'
     volumes: 
