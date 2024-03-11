@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- [API-42] Predict route
+- [PDT-51] Predictor service
 - [API-10] Api project
 - [API-20] Build job on github actions
 - [API-42] Predict route
