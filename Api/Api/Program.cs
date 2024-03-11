@@ -20,8 +20,6 @@ internal abstract class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        string PREDICTOR_PORT = Environment.GetEnvironmentVariable("PREDICTOR_PORT");
-        string PREDICTOR_HOST_URI = Environment.GetEnvironmentVariable("PREDICTOR_HOST_URI");
 
         // Add services to the container.
 
@@ -42,7 +40,9 @@ internal abstract class Program
         // Grpc
         builder.Services.AddGrpcClient<PredictorGrpc.PredictorGrpcClient>(o =>
         {
-            o.Address = new Uri(PREDICTOR_HOST_URI + ":" + PREDICTOR_PORT);
+            var predictorPort = Environment.GetEnvironmentVariable("PREDICTOR_PORT");
+            var predictorHost = Environment.GetEnvironmentVariable("PREDICTOR_HOST_URI");
+            o.Address = new Uri(predictorPort + ":" + predictorHost);
             o.ChannelOptionsActions.Add((Action<GrpcChannelOptions>) (opt =>
             {
                 opt.HttpHandler = (HttpMessageHandler) new SocketsHttpHandler()
